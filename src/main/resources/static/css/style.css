@@ -1,0 +1,22 @@
+body {
+    background-color: #f8f9fa;
+    font-family: Public Sans,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica Neue,Arial,Noto Sans,sans-serif,"Apple Color Emoji","Segoe UI Emoji",Segoe UI Symbol,"Noto Color Emoji";
+}
+
+a {
+    text-decoration: none;
+}
+
+.btn-primary {
+  background-color: #4263EB;
+}
+
+.btn-link {
+    text-decoration: none;
+    color: #000000A6;
+}
+
+.btn-link:hover {
+    background-color: #eaeaea;
+    color: #000000A6;
+}
