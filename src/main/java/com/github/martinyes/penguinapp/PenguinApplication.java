@@ -4,10 +4,13 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class PenguinAppApplication {
+public class PenguinApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(PenguinAppApplication.class, args);
+        new PenguinApplication().run(args);
     }
 
+    private void run(String[] args) {
+        SpringApplication.run(PenguinApplication.class, args);
+    }
 }

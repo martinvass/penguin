@@ -6,10 +6,106 @@
         <div th:replace="~{fragments/header :: header}"></div>
 
         <div class="p-5 text-center bg-light" style="margin-top: 58px;">
-            <h1 class="mb-3"><b>Penguin Application</b></h1>
-            <h4 class="mb-3">Monitoring Server Status</h4>
-            <a class="btn btn-primary" href="" role="button">Get Started</a>
+            <h1 class="mb-3"><b>Penguin</b></h1>
+            <h4 class="mb-3">Effortlessly Monitor Your Servers with Penguin 🐧</h4>
+            <a class="btn btn-primary" href="#get-started" role="button">Get Started</a>
         </div>
+
+        <div class="row mt-5">
+            <div class="col-md-6">
+                <h2>Why Choose Penguin?</h2>
+                <p>Penguin is designed to simplify the way you keep an eye on your servers. Whether you're managing a small-scale application or overseeing a complex infrastructure, Penguin offers an intuitive and efficient solution that keeps you informed in real time.</p>
+            </div>
+
+            <div class="col-md-4">
+                <img th:src="@{/img.png}" alt="Why Choose Penguin" class="img-fluid">
+            </div>
+        </div>
+
+        <div class="justify-content-center text-center">
+            <h2>Key Features:</h2>
+            <div class="row">
+                <div class="col-md-4 mb-2">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">🔍 Real-time Updates</h5>
+                            <p class="card-text">Get instant notifications about server status changes, keeping you in the loop at all times.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-4 mb-2">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">🌐 Server Grouping</h5>
+                            <p class="card-text">Organize servers into groups for easier management and monitoring.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-4 mb-2">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">📈 Historical Data</h5>
+                            <p class="card-text">Dive into historical data to analyze patterns and make informed decisions about your servers.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-4 mb-2">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">🛠️ Easy Configuration</h5>
+                            <p class="card-text">Adding servers and getting started is a breeze, even if you're not a tech guru.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-4 mb-2">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">📱 Responsive Design</h5>
+                            <p class="card-text">Access Penguin from anywhere, on any device, with a user-friendly interface that adapts to your screen.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-4 mb-2">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">🤝 Third-party Integrations</h5>
+                            <p class="card-text">Access Penguin from anywhere, on any device, with a user-friendly interface that adapts to your screen.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="mt-5 text-center">
+            <h2>How Penguin Works:</h2>
+            <ol class="text-start">
+                <li><strong>Add Servers:</strong> Quickly add servers you want to monitor.</li>
+                <li><strong>Stay Updated:</strong> Receive real-time updates on server status changes.</li>
+                <li><strong>Analyze Trends:</strong> Dive into historical data and performance metrics.</li>
+                <li><strong>Take Action:</strong> Set up alerts and take actions based on server status changes.</li>
+            </ol>
+        </div>
+
+        <div class="text-center mt-5" id="get-started">
+            <h2>Get Started Now:</h2>
+            <ol class="text-start">
+                <li>Sign up for a free account.</li>
+                <li>Add your servers to start monitoring.</li>
+                <li>Configure alerts and notifications to fit your needs.</li>
+                <li>Enjoy the peace of mind that comes with knowing your servers are in good hands.</li>
+            </ol>
+        </div>
+
+        <div class="text-center mt-5">
+            <p>Have questions or need assistance? Check out our documentation or get in touch with our support team.</p>
+            <p>Ready to track? Let's dive in! 🚀</p>
+        </div>
+    </div>
 
         <div th:replace="~{fragments/footer :: footer}"></div>
     </div>
