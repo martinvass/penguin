@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/header :: html_header}"></head>
+<body>
+<div th:replace="~{fragments/header :: header}"></div>
+<div class="container">
+    <div class="p-5 text-center bg-light" style="margin-top: 58px;">
+        <h1 class="mb-3" th:text="${group.name}"><b>Group</b></h1>
+    </div>
+
+    <!-- Tab panes -->
+    <div class="tab-content">
+        <div class="tab-pane container active" id="servers">
+            <div class="dashboard-container">
+                <div class="server-card">
+                    <div class="server-info">
+                        <div class="server-icon"><i class="fas fa-server"></i></div>
+                        <div>
+                            <div class="server-name">Server 1</div>
+                            <div class="server-status-online">Online</div>
+                        </div>
+                    </div>
+                    <p>Description</p>
+                    <div class="server-actions">
+                        <a href="#" class="btn btn-primary server-action-button">View Details</a>
+                        <a href="#" class="btn btn-primary server-action-button">Edit</a>
+                        <a href="#" class="btn btn-danger server-action-button">Delete</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="tab-pane container fade" id="groups">
+            <div class="dashboard-container">
+                <div class="server-card">
+                    <div class="server-info">
+                        <div class="server-icon"><i class="fas fa-layer-group"></i></div>
+                        <div>
+                            <div class="server-name">Group 1</div>
+                            <div class="server-status-online">1 server(s)</div>
+                        </div>
+                    </div>
+                    <p>Group description</p>
+                    <div class="server-actions">
+                        <a href="#" class="btn btn-primary server-action-button">View Servers</a>
+                        <a href="#" class="btn btn-primary server-action-button">Edit</a>
+                        <a href="#" class="btn btn-danger server-action-button">Delete</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tab-pane container fade" id="add-server">
+
+            </div>
+        </div>
+    </div>
+
+    <div th:replace="~{fragments/footer :: footer}"></div>
+</div>
+</body>
+</html>

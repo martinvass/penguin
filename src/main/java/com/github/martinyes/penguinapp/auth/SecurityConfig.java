@@ -9,7 +9,6 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.config.annotation.web.configurers.AbstractAuthenticationFilterConfigurer;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
@@ -31,14 +30,24 @@ public class SecurityConfig {
                 .roles("ADMIN")
                 .build();
 
-        return new InMemoryUserDetailsManager(user, admin);
+        UserDetails showcase = User.withDefaultPasswordEncoder()
+                .username("test_user")
+                .password("test123")
+                .roles("TEST")
+                .build();
+
+        return new InMemoryUserDetailsManager(user, admin, showcase);
     }
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         return http
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/", "/images/*", "/auth/*").permitAll()
+                        .requestMatchers("/",
+                                "/images/*",
+                                "/auth/login",
+                                "/auth/registration",
+                                "/features").permitAll()
                         .anyRequest().authenticated()
                 )
                 .httpBasic(Customizer.withDefaults())

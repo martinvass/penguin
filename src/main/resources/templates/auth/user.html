@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:replace="~{fragments/header :: html_header}"></head>
+<body>
+    <div th:replace="~{fragments/header :: header}"></div>
+    <div class="container">
+        <div class="user-container">
+            <div class="user-header">
+                <div sec:authentication="name" class="user-name"></div>
+                <th:block th:each="r, iter:${#authentication.getAuthorities()}">
+                    <span th:text="${r}"></span>
+                    <th:block th:if="${!iter.last}">, </th:block>
+                </th:block>
+            </div>
+            <div class="user-details">
+                <div class="user-details-row">
+                    <div class="fw-bold">Email:</div>
+                    <div>john.doe@example.com</div>
+                </div>
+                <div class="user-details-row">
+                    <div class="fw-bold">Account ID:</div>
+                    <div>#123456</div>
+                </div>
+                <div class="user-details-row">
+                    <div class="fw-bold">Account Creation Date:</div>
+                    <div>2023-08-25</div>
+                </div>
+                <div class="user-details-row">
+                    <div class="fw-bold">Servers Tracked:</div>
+                    <div>10</div>
+                </div>
+            </div>
+            <div class="user-actions">
+                <a href="#" class="btn btn-primary user-action-button">Edit Profile</a>
+                <a href="#" class="btn btn-primary user-action-button">Change Password</a>
+                <a href="#" class="btn btn-danger user-action-button">Delete Account</a>
+            </div>
+        </div>
+
+        <div th:replace="~{fragments/footer :: footer}"></div>
+    </div>
+</body>
+</html>

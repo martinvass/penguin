@@ -1,20 +1,23 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head th:fragment="html_header">
-    <title>Penguin</title>
+    <title th:text="${title}">Penguin</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
-    <link rel="stylesheet" th:href="@{/css/style.css}">
-    <link rel="stylesheet" th:href="@{/css/auth.css}">
+    <link rel="stylesheet" th:href="@{/css/style.css}" href="../../static/css/style.css">
+    <link rel="stylesheet" th:href="@{/css/auth.css}" href="../../static/css/auth.css">
+    <link rel="stylesheet" th:href="@{/css/dashboard.css}" href="../../static/css/dashboard.css">
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
     <script src="https://kit.fontawesome.com/61a424255f.js" crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 </head>
 <body>
     <nav th:fragment="header" class="navbar navbar-bottom sticky-top navbar-expand-lg navbar-light bg-light">
         <div class="container">
-            <a class="navbar-brand me-2" th:href="@{/}">
+            <a class="navbar-brand me-2" th:href="@{/}" href="/">
                 <b>Penguin</b>
             </a>
 
@@ -33,7 +36,11 @@
             <div class="collapse navbar-collapse" id="navbarButtonsExample">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     <li class="nav-item">
-                        <a class="nav-link btn-link px-3 btn" th:href="@{/dashboard}">Dashboard</a>
+                        <a class="nav-link btn-link px-3 btn" th:href="@{/dashboard}" href="/dashboard">Dashboard</a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link btn-link px-3 btn" th:href="@{/features}" href="/features">Features</a>
                     </li>
 
                     <li class="nav-item">
@@ -43,19 +50,21 @@
 
                 <div class="d-flex align-items-center">
                     <li sec:authorize="isAuthenticated()" class="nav-item me-3 me-lg-1">
-                        <a class="nav-link d-sm-flex align-items-sm-center" href="#">
+                        <a class="nav-link d-sm-flex align-items-sm-center" th:href="@{/auth/user}">
                             <span><i class="fa fa-user"></i></span>
                             <strong sec:authentication="name" class="d-none d-sm-block ms-1"></strong>
+                            <strong style="color: #b90202;" sec:authorize="hasRole('ADMIN')">&nbsp;(Admin)</strong>
+                            <strong style="color: #4900d7;" sec:authorize="hasRole('TEST')">&nbsp;(Test)</strong>
                         </a>
                     </li>
 
                     <a sec:authorize="isAuthenticated()" th:href="@{/logout}" class="btn btn-link px-3 me-2">
                         Logout
                     </a>
-                    <a sec:authorize="!isAuthenticated()" th:href="@{/auth/login}" class="btn btn-link px-3 me-2">
+                    <a sec:authorize="!isAuthenticated()" th:href="@{/auth/login}" href="/auth/login" class="btn btn-link px-3 me-2">
                         Login
                     </a>
-                    <a sec:authorize="!isAuthenticated()" th:href="@{/auth/registration}" class="btn btn-primary me-3">
+                    <a sec:authorize="!isAuthenticated()" th:href="@{/auth/registration}" href="/auth/registration" class="btn btn-primary me-3">
                         Sign up
                     </a>
                 </div>
