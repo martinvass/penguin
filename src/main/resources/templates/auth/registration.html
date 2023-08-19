@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/header :: html_header}"></head>
+<body>
+<div th:replace="~{fragments/header :: header}"></div>
+<div class="container">
+
+    <div class="auth-container">
+        <h2 class="text-center">Sign up</h2>
+        <div th:if="${param.error}" class="alert alert-danger">
+            Username already exists.
+        </div>
+        <div th:if="${param.logout}" class="alert alert-success">
+            You have successfully registered. Please check you email for activation link.
+        </div>
+        <form method="post"
+              role="form"
+              th:action="@{/auth/registration}">
+            <div class="mb-3">
+                <label for="username" class="form-label">Username</label>
+                <input type="text" class="form-control" id="username" name="username" placeholder="Enter your username">
+            </div>
+            <div class="mb-3">
+                <label for="email" class="form-label">Email</label>
+                <input type="text" class="form-control" id="email" name="email" placeholder="Enter your email">
+            </div>
+            <div class="mb-3">
+                <label for="password" class="form-label">Password</label>
+                <input type="password" class="form-control" id="password" name="password" placeholder="Enter your password">
+            </div>
+            <button type="submit" class="btn btn-primary btn-block">Submit</button>
+        </form>
+    </div>
+
+    <div th:replace="~{fragments/footer :: footer}"></div>
+</div>
+</body>
+</html>

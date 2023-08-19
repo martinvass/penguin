@@ -2,9 +2,8 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head th:replace="~{fragments/header :: html_header}"></head>
 <body>
-    <div>
-        <div th:replace="~{fragments/header :: header}"></div>
-
+    <div th:replace="~{fragments/header :: header}"></div>
+    <div class="container">
         <div class="p-5 text-center bg-light" style="margin-top: 58px;">
             <h1 class="mb-3"><b>Penguin</b></h1>
             <h4 class="mb-3">Effortlessly Monitor Your Servers with Penguin 🐧</h4>
@@ -17,13 +16,13 @@
                 <p>Penguin is designed to simplify the way you keep an eye on your servers. Whether you're managing a small-scale application or overseeing a complex infrastructure, Penguin offers an intuitive and efficient solution that keeps you informed in real time.</p>
             </div>
 
-            <div class="col-md-4">
-                <img th:src="@{/img.png}" alt="Why Choose Penguin" class="img-fluid">
+            <div class="col-md-6">
+                <img th:src="@{/images/img.png}" alt="Why Choose Penguin" class="img-fluid">
             </div>
         </div>
 
         <div class="justify-content-center text-center">
-            <h2>Key Features:</h2>
+            <h2>Key Features</h2>
             <div class="row">
                 <div class="col-md-4 mb-2">
                     <div class="card">
@@ -74,7 +73,7 @@
                     <div class="card">
                         <div class="card-body">
                             <h5 class="card-title">🤝 Third-party Integrations</h5>
-                            <p class="card-text">Access Penguin from anywhere, on any device, with a user-friendly interface that adapts to your screen.</p>
+                            <p class="card-text">Enhance the project's capabilities by uploading our <a href="#">Tool</a> to your server.</p>
                         </div>
                     </div>
                 </div>
@@ -82,7 +81,7 @@
         </div>
 
         <div class="mt-5 text-center">
-            <h2>How Penguin Works:</h2>
+            <h2>How Penguin Works</h2>
             <ol class="text-start">
                 <li><strong>Add Servers:</strong> Quickly add servers you want to monitor.</li>
                 <li><strong>Stay Updated:</strong> Receive real-time updates on server status changes.</li>
@@ -92,7 +91,7 @@
         </div>
 
         <div class="text-center mt-5" id="get-started">
-            <h2>Get Started Now:</h2>
+            <h2>Get Started Now</h2>
             <ol class="text-start">
                 <li>Sign up for a free account.</li>
                 <li>Add your servers to start monitoring.</li>
@@ -103,7 +102,7 @@
 
         <div class="text-center mt-5">
             <p>Have questions or need assistance? Check out our documentation or get in touch with our support team.</p>
-            <p>Ready to track? Let's dive in! 🚀</p>
+            <p>Ready to track? <a href="#">Let's dive in!</a> 🚀</p>
         </div>
     </div>
 
