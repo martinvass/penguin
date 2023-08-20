@@ -4,9 +4,9 @@
 <body>
     <div th:replace="~{fragments/header :: header}"></div>
     <div class="container">
-        <div class="user-container">
+        <div th:object="${user}" class="user-container">
             <div class="user-header">
-                <div sec:authentication="name" class="user-name"></div>
+                <div sec:authentication="name" class="user-name">John Doe</div>
                 <th:block th:each="r, iter:${#authentication.getAuthorities()}">
                     <span th:text="${r}"></span>
                     <th:block th:if="${!iter.last}">, </th:block>
@@ -15,15 +15,15 @@
             <div class="user-details">
                 <div class="user-details-row">
                     <div class="fw-bold">Email:</div>
-                    <div>john.doe@example.com</div>
+                    <div th:text="${user.email}">john.doe@example.com</div>
                 </div>
                 <div class="user-details-row">
                     <div class="fw-bold">Account ID:</div>
-                    <div>#123456</div>
+                    <div th:text="${user.getAccountID()}">#123456</div>
                 </div>
                 <div class="user-details-row">
                     <div class="fw-bold">Account Creation Date:</div>
-                    <div>2023-08-25</div>
+                    <div th:text="${user.creationDate}">2023-08-25</div>
                 </div>
                 <div class="user-details-row">
                     <div class="fw-bold">Servers Tracked:</div>

@@ -16,7 +16,7 @@ import jakarta.persistence.*;
 public class Server {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue
     private Long id;
 
     @NotEmpty(message = "IP address cannot be null")

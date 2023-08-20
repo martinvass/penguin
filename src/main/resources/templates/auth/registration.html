@@ -7,26 +7,29 @@
     <div class="container">
         <div class="auth-container">
             <h2 class="text-center">Sign up</h2>
-            <div th:if="${param.error}" class="alert alert-danger alert-dismissible">
+            <div th:if="${param.error}" class="alert alert-danger alert-dismissible fade show">
                 <strong>Error!</strong> Username already exists.
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
-            <div th:if="${param.logout}" class="alert alert-success alert-dismissible">
+            <div th:if="${param.logout}" class="alert alert-success alert-dismissible fade show">
                 <strong>Success!</strong> You have successfully registered. Please check you email for activation link.
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
             <form method="post"
                   role="form"
+                  th:object="${user}"
                   th:action="@{/auth/registration}">
                 <div class="mb-3">
                     <label for="username" class="form-label">Username</label>
-                    <input type="text" class="form-control" id="username" name="username" placeholder="Enter your username">
+                    <input th:field="*{username}" type="text" class="form-control" id="username" name="username" placeholder="Enter your username">
                 </div>
                 <div class="mb-3">
                     <label for="email" class="form-label">Email</label>
-                    <input type="text" class="form-control" id="email" name="email" placeholder="Enter your email">
+                    <input th:field="*{email}" type="text" class="form-control" id="email" name="email" placeholder="Enter your email">
                 </div>
                 <div class="mb-3">
                     <label for="password" class="form-label">Password</label>
-                    <input type="password" class="form-control" id="password" name="password" placeholder="Enter your password">
+                    <input th:field="*{password}" type="password" class="form-control" id="password" name="password" placeholder="Enter your password">
                 </div>
                 <button type="submit" class="btn btn-primary btn-block">Submit</button>
             </form>

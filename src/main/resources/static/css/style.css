@@ -52,9 +52,21 @@ a:hover {
 .btn-primary {
     background-color: #81c566;
     border-color: #81c566;
+    --bs-btn-active-bg: #81c566;
+    --bs-btn-active-border-color: #81c566;
 }
 
 .btn-primary:hover {
+    background-color: #4b980e;
+    border-color: #4b980e;
+}
+
+.btn-primary:active {
+    background-color: #4b980e;
+    border-color: #4b980e;
+}
+
+.btn-primary:visited {
     background-color: #4b980e;
     border-color: #4b980e;
 }
