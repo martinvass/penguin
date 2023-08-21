@@ -2,6 +2,7 @@ package com.github.martinyes.penguinapp.auth.user.service.impl;
 
 import com.github.martinyes.penguinapp.auth.user.AppUser;
 import com.github.martinyes.penguinapp.auth.user.AppUserRepository;
+import com.github.martinyes.penguinapp.auth.user.exception.UserAlreadyExistsException;
 import com.github.martinyes.penguinapp.auth.user.service.AppUserService;
 import lombok.AllArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -25,25 +26,33 @@ public class AppUserServiceImpl implements AppUserService, UserDetailsService {
     // TODO: token implementation
     @Override
     public String registerUser(AppUser user) {
-        boolean userExists = appUserRepository
+        boolean userExistsByEmail = appUserRepository
                 .findByEmail(user.getEmail())
                 .isPresent();
 
-        if (userExists) {
-            // TODO check of attributes are the same and
-            // TODO if email not confirmed send confirmation email.
+        boolean userExistsByUsername = appUserRepository
+                .findByUsername(user.getUsername())
+                .isPresent();
 
-            throw new IllegalStateException("email already taken");
-        }
+        if (userExistsByEmail || userExistsByUsername)
+            throw new UserAlreadyExistsException();
 
-        String encodedPassword = argon2PasswordEncoder
-                .encode(user.getPassword());
-
-        user.setPassword(encodedPassword);
-
+        user.setPassword(argon2PasswordEncoder
+                .encode(user.getPassword()));
         appUserRepository.save(user);
 
         return "";
+    }
+
+    @Override
+    public void deleteUser(AppUser user, boolean deactivate) {
+        if (deactivate) {
+            user.setEnabled(false);
+            appUserRepository.save(user);
+            return;
+        }
+
+        appUserRepository.delete(user);
     }
 
     @Override

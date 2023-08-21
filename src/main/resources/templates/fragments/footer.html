@@ -7,6 +7,18 @@
             &copy; 2023
             <a style="color: #5ab510" href="https://github.com/martinyes/penguin"><b>Penguin</b></a>
         </div>
+
+        <script th:inline="javascript">
+            // Show and hide toasts
+            var toasts = document.querySelectorAll('.toast');
+            toasts.forEach(function(toast) {
+                var bootstrapToast = new bootstrap.Toast(toast);
+                bootstrapToast.show();
+                toast.addEventListener('hidden.bs.toast', function () {
+                    toast.remove();
+                });
+            });
+        </script>
     </footer>
 </body>
 </html>

@@ -2,6 +2,7 @@ package com.github.martinyes.penguinapp.auth.user;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -19,10 +20,20 @@ import java.util.Collections;
 @Entity(name = "users")
 public class AppUser implements UserDetails {
 
-    @Id @GeneratedValue
+    @SequenceGenerator(
+            name = "user_sequence",
+            sequenceName = "user_sequence",
+            allocationSize = 1
+    )
+    @Id
+    @GeneratedValue(
+            strategy = GenerationType.SEQUENCE,
+            generator = "user_sequence"
+    )
     private Long id;
 
     @NotEmpty(message = "Username cannot be null")
+    @Size(min = 5, max = 250)
     @Column(unique = true)
     private String username;
 

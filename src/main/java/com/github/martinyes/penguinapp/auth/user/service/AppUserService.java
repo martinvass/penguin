@@ -8,6 +8,7 @@ import java.util.Optional;
 public interface AppUserService extends UserDetailsService {
 
     String registerUser(AppUser user);
+    void deleteUser(AppUser user, boolean deactivate);
     Optional<AppUser> findByUsername(String username);
     Optional<AppUser> findByEmail(String email);
 }

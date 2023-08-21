@@ -3,6 +3,33 @@
 <head th:replace="~{fragments/header :: html_header}"></head>
 <body>
     <div th:replace="~{fragments/header :: header}"></div>
+
+    <div class="container mt-3">
+        <!-- Error Message Toast for account deativation -->
+        <div th:if="${(param.deactivation != null) and (param.deactivation[0] == 'failure')}"
+             class="toast align-items-center text-white bg-danger border-0 position-fixed top-0 end-0"
+             role="alert" aria-live="assertive" aria-atomic="true" style="margin-top: 75px; margin-right: 10px">
+            <div class="d-flex">
+                <div class="toast-body">
+                    Account deactivation failed. Please make sure you entered the correct password.
+                </div>
+                <button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+        </div>
+
+        <!-- Error Message Toast for account deletion -->
+        <div th:if="${(param.deletion != null) and (param.deletion[0] == 'failure')}"
+             class="toast align-items-center text-white bg-danger border-0 position-fixed top-0 end-0"
+             role="alert" aria-live="assertive" aria-atomic="true" style="margin-top: 75px; margin-right: 10px">
+            <div class="d-flex">
+                <div class="toast-body">
+                    Account deletion failed. Please make sure you entered the correct password.
+                </div>
+                <button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+        </div>
+    </div>
+
     <div class="container">
         <div th:object="${user}" class="user-container">
             <div class="user-header">
@@ -33,7 +60,68 @@
             <div class="user-actions">
                 <a href="#" class="btn btn-primary user-action-button">Edit Profile</a>
                 <a href="#" class="btn btn-primary user-action-button">Change Password</a>
-                <a href="#" class="btn btn-danger user-action-button">Delete Account</a>
+                <a href="#" class="btn btn-danger user-action-button" data-bs-toggle="modal" data-bs-target="#deactivateModal">Deactivate Account</a>
+                <a href="#" class="btn btn-danger user-action-button" data-bs-toggle="modal" data-bs-target="#deleteModal">Delete Account</a>
+            </div>
+        </div>
+
+        <div class="modal fade" id="deactivateModal" tabindex="-1" role="dialog" aria-labelledby="deactivateModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="deactivateModalLabel">Account Deactivation</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                        </button>
+                    </div>
+                    <form method="post"
+                          role="form"
+                          th:action="@{/auth/user/deactivate}">
+                        <div class="modal-body">
+                            <p>Are you sure about your decision? If so and would like to proceed with the account deactivation, please enter your password and click the button below.
+                            It will immediately log you out.</p>
+                            <p>If you have changed your mind, please click the cancel button and your account will remain active.</p>
+
+                            <div class="mb-3">
+                                <label for="password" class="form-label">Password</label>
+                                <input type="password" class="form-control" id="password" name="password" placeholder="Enter your password for confirmation" required>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                            <button type="submit" class="btn btn-danger">Deactivate</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="deleteModalLabel">Account Deletion</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                        </button>
+                    </div>
+                    <form method="post"
+                          role="form"
+                          th:action="@{/auth/user/delete}">
+                        <div class="modal-body">
+                            <p>Are you sure about your decision? If so and would like to proceed with the account deletion, please enter your password and click the button below.</p>
+                            <p>It will immediately delete your account from our system permanently.</p>
+                            <p>If you have changed your mind, please click the cancel button.</p>
+
+                            <div class="mb-3">
+                                <label for="passwordDeletion" class="form-label">Password</label>
+                                <input type="password" class="form-control" id="passwordDeletion" name="passwordDeletion" placeholder="Enter your password for confirmation" required>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                            <button type="submit" class="btn btn-danger">Delete</button>
+                        </div>
+                    </form>
+                </div>
             </div>
         </div>
 
