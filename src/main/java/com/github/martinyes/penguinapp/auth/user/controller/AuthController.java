@@ -1,6 +1,7 @@
 package com.github.martinyes.penguinapp.auth.user.controller;
 
 import com.github.martinyes.penguinapp.auth.user.AppUser;
+import com.github.martinyes.penguinapp.auth.user.edit.EditData;
 import com.github.martinyes.penguinapp.auth.user.exception.UserAlreadyExistsException;
 import com.github.martinyes.penguinapp.auth.user.service.AppUserService;
 import jakarta.servlet.http.HttpServletRequest;
@@ -58,6 +59,27 @@ public class AuthController {
             return "redirect:/auth/registration?alreadyExists";
         }
         return "redirect:/auth/login?success";
+    }
+
+    @PostMapping("auth/user/edit")
+    private String edit(Principal principal, @RequestParam("username") String username,
+                        @RequestParam("email") String email,
+                        HttpServletRequest request, HttpServletResponse response) {
+        Optional<AppUser> user = userService.findByUsername(principal.getName());
+
+        if (user.isEmpty())
+            throw new UsernameNotFoundException(principal.getName());
+
+        if (username.equals(user.get().getUsername()) && email.equals(user.get().getEmail()))
+            return "/auth/user";
+
+        // Invalidate the user's session to log them out
+        new SecurityContextLogoutHandler().logout(
+                request, response, SecurityContextHolder.getContext().getAuthentication()
+        );
+        userService.editUser(user.get(), new EditData(username, email));
+
+        return "redirect:/auth/login?userEditSuccess";
     }
 
     @PostMapping("auth/user/delete")
