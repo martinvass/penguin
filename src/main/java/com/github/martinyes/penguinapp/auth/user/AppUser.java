@@ -1,5 +1,7 @@
 package com.github.martinyes.penguinapp.auth.user;
 
+import com.github.martinyes.penguinapp.server.Server;
+import com.github.martinyes.penguinapp.server.ServerGroup;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Size;
@@ -11,8 +13,10 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.List;
 
 @Getter
 @Setter
@@ -49,6 +53,12 @@ public class AppUser implements UserDetails {
     private AppUserRole role = AppUserRole.USER;
     private Boolean locked = false, enabled = true;
     private Date creationDate = new Date(System.currentTimeMillis());
+
+    @OneToMany(mappedBy = "user")
+    private List<ServerGroup> serverGroups = new ArrayList<>();
+
+    @OneToMany(mappedBy = "user")
+    private List<Server> servers = new ArrayList<>();
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

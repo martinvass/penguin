@@ -19,7 +19,7 @@
                         </div>
                         <form method="post"
                               role="form"
-                              th:action="@{/}">
+                              th:action="@{/dashboard/server/create}">
                             <div class="modal-body">
                                 <div class="mb-3">
                                     <label for="serverName" class="form-label">Server name</label>
@@ -31,7 +31,7 @@
                                 </div>
                                 <div class="mb-3">
                                     <label for="serverDesc" class="form-label">Server description</label>
-                                    <input type="text" class="form-control" id="serverDesc" name="serverDesc" placeholder="Enter server description" required />
+                                    <input type="text" class="form-control" id="serverDesc" name="serverDesc" placeholder="Enter server description" />
                                 </div>
                             </div>
                             <div class="modal-footer">
@@ -62,7 +62,7 @@
                                 </div>
                                 <div class="mb-3">
                                     <label for="groupDesc" class="form-label">Group description</label>
-                                    <input type="text" class="form-control" id="groupDesc" name="groupDesc" placeholder="Enter group description" required />
+                                    <input type="text" class="form-control" id="groupDesc" name="groupDesc" placeholder="Enter group description" />
                                 </div>
                                 <div class="mb-3">
                                     <label for="groupLimit" class="form-label">Group limit</label>

@@ -1,7 +1,7 @@
 package com.github.martinyes.penguinapp.auth.user.service.impl;
 
 import com.github.martinyes.penguinapp.auth.user.AppUser;
-import com.github.martinyes.penguinapp.auth.user.AppUserRepository;
+import com.github.martinyes.penguinapp.auth.repository.AppUserRepository;
 import com.github.martinyes.penguinapp.auth.user.edit.EditData;
 import com.github.martinyes.penguinapp.auth.user.exception.UserAlreadyExistsException;
 import com.github.martinyes.penguinapp.auth.user.service.AppUserService;

@@ -1,4 +1,4 @@
-# Penguin
+# Penguin 🐧
 
 Penguin is a server status tracking application that allows you to monitor the status of your servers in real-time and take informed actions based on their status changes.
 

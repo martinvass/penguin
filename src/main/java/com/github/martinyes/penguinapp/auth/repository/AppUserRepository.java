@@ -1,5 +1,6 @@
-package com.github.martinyes.penguinapp.auth.user;
+package com.github.martinyes.penguinapp.auth.repository;
 
+import com.github.martinyes.penguinapp.auth.user.AppUser;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;

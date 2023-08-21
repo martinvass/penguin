@@ -1,4 +1,4 @@
-$(document).ready(function() {
+$(document).click(function() {
     $('#loginForm').submit(function(e) {
         e.preventDefault(); // Prevent form submission
         const submitButton = $('#loginBtn');

@@ -1,5 +1,6 @@
-package com.github.martinyes.penguinapp.server.entity;
+package com.github.martinyes.penguinapp.server;
 
+import com.github.martinyes.penguinapp.auth.user.AppUser;
 import jakarta.persistence.Id;
 import jakarta.validation.constraints.NotEmpty;
 import lombok.AllArgsConstructor;
@@ -9,14 +10,22 @@ import lombok.NoArgsConstructor;
 
 import jakarta.persistence.*;
 
-@Entity
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
+@Entity(name = "servers")
 public class Server {
 
+    @SequenceGenerator(
+            name = "server_sequence",
+            sequenceName = "server_sequence",
+            allocationSize = 1
+    )
     @Id
-    @GeneratedValue
+    @GeneratedValue(
+            strategy = GenerationType.SEQUENCE,
+            generator = "server_sequence"
+    )
     private Long id;
 
     @NotEmpty(message = "IP address cannot be null")
@@ -27,8 +36,19 @@ public class Server {
     @Column(unique = true)
     private String name;
 
+    @Column
     private String description;
+
+    @Enumerated(EnumType.STRING)
     private ServerStatus serverStatus = ServerStatus.UNKNOWN;
+
+    @ManyToOne
+    @JoinColumn(name = "server_group_id")
+    private ServerGroup serverGroup;
+
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private AppUser user;
 
     @Getter
     @AllArgsConstructor
