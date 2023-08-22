@@ -7,7 +7,40 @@
     <div class="p-5 text-center bg-light" style="margin-top: 58px;">
         <h1 class="mb-3" th:text="${group.name}"><b>Group</b></h1>
 
-        <a class="btn btn-primary" th:href="@{/dashboard}" role="button">Go Back</a>
+        <button class="btn btn-primary" role="button"><a style="color: #fff" th:href="@{/dashboard}">Go Back</a></button>
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addServerModal">
+            Add Server
+        </button>
+    </div>
+
+    <div class="modal fade" id="addServerModal" tabindex="-1" role="dialog" aria-labelledby="addServerModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addServerModalLabel">Add Server</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                    </button>
+                </div>
+                <form method="post"
+                      role="form"
+                      th:action="@{/dashboard/group/add}">
+                    <input type="hidden" name="groupId" th:value="${group.id}" />
+                    <div class="modal-body">
+                        <p>Please pick the server you'd like to add:</p>
+                        <div class="mb-3">
+                            <select name="serverName" class="form-select" aria-label="Select server">
+                                <option selected>Open this to select a server</option>
+                                <option th:each="server : ${servers}" th:value="${server.name}" th:text="${server.name}"></option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                        <button type="submit" class="btn btn-primary">Add Server</button>
+                    </div>
+                </form>
+            </div>
+        </div>
     </div>
 
     <div class="tab-content">
@@ -32,8 +65,12 @@
                     <p th:text="${server.description} ?: ${server.description}">Description</p>
                     <div class="server-actions">
                         <a href="#" class="btn btn-primary server-action-button">View Details</a>
-                        <a href="#" class="btn btn-primary server-action-button">Edit</a>
-                        <a href="#" class="btn btn-danger server-action-button">Delete</a>
+                        <form method="post"
+                              role="form"
+                              th:action="@{/dashboard/group/remove}">
+                            <input type="hidden" name="serverId" th:value="${server.id}" />
+                            <button type="submit" class="btn btn-danger server-action-button">Remove</button>
+                        </form>
                     </div>
                 </div>
             </div>

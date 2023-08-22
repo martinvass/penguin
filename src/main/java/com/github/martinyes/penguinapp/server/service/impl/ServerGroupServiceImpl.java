@@ -31,6 +31,11 @@ public class ServerGroupServiceImpl implements ServerGroupService {
     }
 
     @Override
+    public Optional<ServerGroup> findById(Long id) {
+        return serverGroupRepository.findById(id);
+    }
+
+    @Override
     public void create(CreateGroupData data) {
         ServerGroup group = new ServerGroup();
         group.setUser(data.getUser());
@@ -56,5 +61,17 @@ public class ServerGroupServiceImpl implements ServerGroupService {
         }
 
         serverGroupRepository.deleteById(id);
+    }
+
+    @Override
+    public void addServerToGroup(ServerGroup group, Server server) {
+        server.setServerGroup(group);
+        serverService.save(server);
+    }
+
+    @Override
+    public void removeServerFromGroup(Server server) {
+        server.setServerGroup(null);
+        serverService.save(server);
     }
 }

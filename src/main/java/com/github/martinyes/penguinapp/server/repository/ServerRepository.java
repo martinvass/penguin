@@ -7,10 +7,12 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 @Transactional(readOnly = true)
 public interface ServerRepository extends JpaRepository<Server, Long> {
 
+    Optional<Server> findByName(String name);
     List<Server> findByUser(AppUser user);
 }

@@ -9,6 +9,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @AllArgsConstructor
 @Service
@@ -19,6 +20,16 @@ public class ServerServiceImpl implements ServerService {
     @Override
     public List<Server> findByUser(AppUser user) {
         return serverRepository.findByUser(user);
+    }
+
+    @Override
+    public Optional<Server> findById(Long id) {
+        return serverRepository.findById(id);
+    }
+
+    @Override
+    public Optional<Server> findByName(String name) {
+        return serverRepository.findByName(name);
     }
 
     @Override

@@ -74,6 +74,40 @@
                 </div>
             </div>
 
+            <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="editModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="editModalLabel">Server Edit</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                            </button>
+                        </div>
+                        <form method="post"
+                              role="form"
+                              th:action="@{/dashboard/server/edit}">
+                            <div class="modal-body">
+                                <div class="mb-3">
+                                    <label for="serverNameModal" class="form-label">Server name</label>
+                                    <input type="text" class="form-control" id="serverNameModal" name="serverNameModal">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="serverAddrModal" class="form-label">Server address</label>
+                                    <input type="text" class="form-control" id="serverAddrModal" name="serverAddrModal">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="serverDescModal" class="form-label">Server description</label>
+                                    <input type="text" class="form-control" id="serverDescModal" name="serverDescModal">
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                <button type="submit" class="btn btn-primary">Save changes</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
             <!-- Nav tabs -->
             <ul class="nav nav-tabs">
                 <li class="nav-item">
@@ -125,7 +159,13 @@
                             <p th:text="${server.description} ?: ${server.description}">Description</p>
                             <div class="server-actions">
                                 <a href="#" class="btn btn-primary server-action-button">View Details</a>
-                                <a href="#" class="btn btn-primary server-action-button">Edit</a>
+                                <button
+                                        data-bs-toggle="modal"
+                                        data-bs-target="#editModal"
+                                        class="edit-btn btn btn-primary server-action-button"
+                                        th:data-server-name="${server.name}" th:data-server-address="${server.address}" th:data-server-description="${server.description}">
+                                    Edit
+                                </button>
                                 <form method="post"
                                       role="form"
                                       th:action="@{/dashboard/server/delete}">
@@ -166,8 +206,26 @@
                 </div>
             </div>
         </div>
-
         <div th:replace="~{fragments/footer :: footer}"></div>
+
+    <script th:inline="javascript">
+        const editButtons = document.querySelectorAll(".edit-btn");
+        const serverNameInput = document.getElementById("serverNameModal");
+        const serverAddressInput = document.getElementById("serverAddrModal");
+        const serverDescriptionInput = document.getElementById("serverDescModal");
+
+        editButtons.forEach(button => {
+            button.addEventListener("click", function () {
+                const serverName = button.getAttribute("data-server-name");
+                const serverAddress = button.getAttribute("data-server-address");
+                const serverDescription = button.getAttribute("data-server-description");
+
+                serverNameInput.value = serverName;
+                serverAddressInput.value = serverAddress;
+                serverDescriptionInput.value = serverDescription;
+            });
+        });
+    </script>
     </div>
 </body>
 </html>
