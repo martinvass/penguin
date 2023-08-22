@@ -9,5 +9,7 @@ import java.util.List;
 public interface ServerService {
 
     List<Server> findByUser(AppUser user);
-    Server create(CreateServerData data);
+    void create(CreateServerData data);
+    void delete(Long id);
+    void save(Server server);
 }

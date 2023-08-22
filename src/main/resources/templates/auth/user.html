@@ -41,20 +41,24 @@
             </div>
             <div class="user-details">
                 <div class="user-details-row">
-                    <div class="fw-bold">Email:</div>
-                    <div th:text="${user.email}">john.doe@example.com</div>
-                </div>
-                <div class="user-details-row">
                     <div class="fw-bold">Account ID:</div>
                     <div th:text="${user.getAccountID()}">#123456</div>
+                </div>
+                <div class="user-details-row">
+                    <div class="fw-bold">Email:</div>
+                    <div th:text="${user.email}">john.doe@example.com</div>
                 </div>
                 <div class="user-details-row">
                     <div class="fw-bold">Account Creation Date:</div>
                     <div th:text="${user.creationDate}">2023-08-25</div>
                 </div>
                 <div class="user-details-row">
-                    <div class="fw-bold">Servers Tracked:</div>
-                    <div>10</div>
+                    <div class="fw-bold">Servers:</div>
+                    <div th:text="${user.servers.size()}">10</div>
+                </div>
+                <div class="user-details-row">
+                    <div class="fw-bold">Server Groups:</div>
+                    <div th:text="${user.serverGroups.size()}">10</div>
                 </div>
             </div>
             <div class="user-actions">
@@ -108,7 +112,7 @@
                           th:action="@{/auth/user/delete}">
                         <div class="modal-body">
                             <p>Are you sure about your decision? If so and would like to proceed with the account deletion, please enter your password and click the button below.</p>
-                            <p>It will immediately delete your account from our system permanently.</p>
+                            <p>It will immediately delete your account from our system <strong>permanently</strong>.</p>
                             <p>If you have changed your mind, please click the cancel button.</p>
 
                             <div class="mb-3">

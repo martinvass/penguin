@@ -22,13 +22,23 @@ public class ServerServiceImpl implements ServerService {
     }
 
     @Override
-    public Server create(CreateServerData data) {
+    public void create(CreateServerData data) {
         Server server = new Server();
         server.setUser(data.getUser());
         server.setAddress(data.getAddress());
         server.setName(data.getName());
         server.setDescription(data.getDescription().isEmpty() ? "" : data.getDescription());
 
-        return serverRepository.save(server);
+        serverRepository.save(server);
+    }
+
+    @Override
+    public void delete(Long id) {
+        serverRepository.deleteById(id);
+    }
+
+    @Override
+    public void save(Server server) {
+        serverRepository.save(server);
     }
 }

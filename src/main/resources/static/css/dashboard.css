@@ -59,3 +59,15 @@
     text-transform: uppercase;
     letter-spacing: 1px;
 }
+
+.server-group-name {
+    color: #4b980e;
+    font-size: 16px;
+}
+
+.no-servers-message {
+    text-align: center;
+    margin-top: 15px;
+    font-size: 24px;
+    color: #888;
+}

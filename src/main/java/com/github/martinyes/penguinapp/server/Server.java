@@ -29,7 +29,6 @@ public class Server {
     private Long id;
 
     @NotEmpty(message = "IP address cannot be null")
-    @Column(unique = true)
     private String address;
 
     @NotEmpty(message = "Server name cannot be null")
