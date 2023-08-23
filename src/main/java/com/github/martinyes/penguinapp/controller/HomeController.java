@@ -2,6 +2,7 @@ package com.github.martinyes.penguinapp.controller;
 
 import com.github.martinyes.penguinapp.auth.user.AppUser;
 import com.github.martinyes.penguinapp.auth.user.service.AppUserService;
+import com.github.martinyes.penguinapp.util.RadioFormDeleteOption;
 import com.github.martinyes.penguinapp.server.service.ServerGroupService;
 import com.github.martinyes.penguinapp.server.service.ServerService;
 import lombok.AllArgsConstructor;
@@ -37,6 +38,7 @@ public class HomeController {
         model.addAttribute("title", "Penguin - Dashboard");
         model.addAttribute("servers", serverService.findByUser(user.get()));
         model.addAttribute("groups", serverGroupService.findByUser(user.get()));
+        model.addAttribute("radioForm", new RadioFormDeleteOption());
         return "/dashboard/home";
     }
 

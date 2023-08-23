@@ -3,7 +3,7 @@ package com.github.martinyes.penguinapp.server.service.impl;
 import com.github.martinyes.penguinapp.auth.user.AppUser;
 import com.github.martinyes.penguinapp.server.Server;
 import com.github.martinyes.penguinapp.server.ServerGroup;
-import com.github.martinyes.penguinapp.server.data.CreateGroupData;
+import com.github.martinyes.penguinapp.server.data.create.CreateGroupData;
 import com.github.martinyes.penguinapp.server.repository.ServerGroupRepository;
 import com.github.martinyes.penguinapp.server.service.ServerGroupService;
 import com.github.martinyes.penguinapp.server.service.ServerService;

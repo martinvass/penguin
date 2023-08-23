@@ -1,4 +1,4 @@
-package com.github.martinyes.penguinapp.server.data;
+package com.github.martinyes.penguinapp.server.data.create;
 
 import com.github.martinyes.penguinapp.auth.user.AppUser;
 import lombok.AllArgsConstructor;

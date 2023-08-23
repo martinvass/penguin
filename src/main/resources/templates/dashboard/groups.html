@@ -13,6 +13,7 @@
         </button>
     </div>
 
+    <!-- Add group modal -->
     <div class="modal fade" id="addServerModal" tabindex="-1" role="dialog" aria-labelledby="addServerModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
@@ -29,7 +30,7 @@
                         <p>Please pick the server you'd like to add:</p>
                         <div class="mb-3">
                             <select name="serverName" class="form-select" aria-label="Select server">
-                                <option selected>Open this to select a server</option>
+                                <option selected th:value="0">Open this to select a server</option>
                                 <option th:each="server : ${servers}" th:value="${server.name}" th:text="${server.name}"></option>
                             </select>
                         </div>

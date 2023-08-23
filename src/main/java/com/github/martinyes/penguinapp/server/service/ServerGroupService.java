@@ -3,7 +3,7 @@ package com.github.martinyes.penguinapp.server.service;
 import com.github.martinyes.penguinapp.auth.user.AppUser;
 import com.github.martinyes.penguinapp.server.Server;
 import com.github.martinyes.penguinapp.server.ServerGroup;
-import com.github.martinyes.penguinapp.server.data.CreateGroupData;
+import com.github.martinyes.penguinapp.server.data.create.CreateGroupData;
 
 import java.util.List;
 import java.util.Optional;

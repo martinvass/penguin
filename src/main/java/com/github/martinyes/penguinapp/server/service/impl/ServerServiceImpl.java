@@ -1,7 +1,8 @@
 package com.github.martinyes.penguinapp.server.service.impl;
 
 import com.github.martinyes.penguinapp.auth.user.AppUser;
-import com.github.martinyes.penguinapp.server.data.CreateServerData;
+import com.github.martinyes.penguinapp.server.data.create.CreateServerData;
+import com.github.martinyes.penguinapp.server.data.edit.EditServerData;
 import com.github.martinyes.penguinapp.server.repository.ServerRepository;
 import com.github.martinyes.penguinapp.server.Server;
 import com.github.martinyes.penguinapp.server.service.ServerService;
@@ -46,6 +47,22 @@ public class ServerServiceImpl implements ServerService {
     @Override
     public void delete(Long id) {
         serverRepository.deleteById(id);
+    }
+
+    @Override
+    public void edit(Long id, EditServerData data) {
+        Optional<Server> server = findById(id);
+
+        if (server.isEmpty())
+            throw new RuntimeException("server not found");
+
+        server.get().setName(data.getServerName());
+        server.get().setAddress(data.getServerAddr());
+        server.get().setDescription(data.getServerDesc());
+        if (data.getServerGroup() != null)
+            server.get().setServerGroup(data.getServerGroup());
+
+        save(server.get());
     }
 
     @Override
