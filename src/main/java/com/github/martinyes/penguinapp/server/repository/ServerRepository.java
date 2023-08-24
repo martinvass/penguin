@@ -9,6 +9,10 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * Repository interface for accessing and managing server entities.
+ * Provides methods to interact with the underlying data store.
+ */
 @Repository
 @Transactional(readOnly = true)
 public interface ServerRepository extends JpaRepository<Server, Long> {

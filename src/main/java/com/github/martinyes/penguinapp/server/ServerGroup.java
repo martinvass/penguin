@@ -10,6 +10,9 @@ import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Entity class representing a server group.
+ */
 @Getter
 @Setter
 @Entity

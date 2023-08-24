@@ -5,6 +5,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+/**
+ * Data Transfer Object (DTO) class for creating a server group.
+ */
 @Getter
 @Setter
 @NoArgsConstructor

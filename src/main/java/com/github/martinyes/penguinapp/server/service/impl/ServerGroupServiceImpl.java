@@ -14,6 +14,10 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * Implementation of the {@link ServerGroupService} interface.
+ * Provides methods for managing server groups.
+ */
 @AllArgsConstructor
 @Service
 public class ServerGroupServiceImpl implements ServerGroupService {

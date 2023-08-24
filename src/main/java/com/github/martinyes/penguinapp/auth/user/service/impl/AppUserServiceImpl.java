@@ -14,6 +14,9 @@ import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
+/**
+ * Service implementation for managing application users.
+ */
 @Service
 @AllArgsConstructor
 public class AppUserServiceImpl implements AppUserService, UserDetailsService {
@@ -24,7 +27,6 @@ public class AppUserServiceImpl implements AppUserService, UserDetailsService {
     private final AppUserRepository appUserRepository;
     private final Argon2PasswordEncoder argon2PasswordEncoder;
 
-    // TODO: token implementation
     @Override
     public String registerUser(AppUser user) {
         boolean userExistsByEmail = appUserRepository
@@ -45,6 +47,12 @@ public class AppUserServiceImpl implements AppUserService, UserDetailsService {
         return "";
     }
 
+    /**
+     * Deletes or deactivates an application user based on the provided flag.
+     *
+     * @param user       The AppUser to be deleted or deactivated.
+     * @param deactivate Flag indicating whether to deactivate the user (true) or delete them (false).
+     */
     @Override
     public void deleteUser(AppUser user, boolean deactivate) {
         if (deactivate) {
@@ -56,6 +64,12 @@ public class AppUserServiceImpl implements AppUserService, UserDetailsService {
         appUserRepository.delete(user);
     }
 
+    /**
+     * Edits an existing application user's information based on the provided DTO.
+     *
+     * @param user The AppUser to be edited.
+     * @param dto  The EditUserDTO containing the updated user information.
+     */
     @Override
     public void editUser(AppUser user, EditUserDTO dto) {
         user.setUsername(dto.getUsername());
@@ -64,11 +78,23 @@ public class AppUserServiceImpl implements AppUserService, UserDetailsService {
         appUserRepository.save(user);
     }
 
+    /**
+     * Finds an application user by their username.
+     *
+     * @param username The username of the user to find.
+     * @return An Optional containing the found AppUser, or an empty Optional if not found.
+     */
     @Override
     public Optional<AppUser> findByUsername(String username) {
         return appUserRepository.findByUsername(username);
     }
 
+    /**
+     * Finds an application user by their email.
+     *
+     * @param email The email of the user to find.
+     * @return An Optional containing the found AppUser, or an empty Optional if not found.
+     */
     @Override
     public Optional<AppUser> findByEmail(String email) {
         return appUserRepository.findByEmail(email);

@@ -18,6 +18,9 @@ import org.springframework.web.bind.annotation.*;
 import java.security.Principal;
 import java.util.Optional;
 
+/**
+ * Controller class for handling requests related to the application's home and dashboard pages.
+ */
 @Controller
 @AllArgsConstructor
 public class HomeController {
@@ -26,12 +29,26 @@ public class HomeController {
     private final ServerService serverService;
     private final ServerGroupService serverGroupService;
 
+    /**
+     * Handler method for the home page.
+     *
+     * @param model The model to add attributes for rendering the view.
+     * @return The name of the view template for the home page.
+     */
     @GetMapping("/")
     private String index(Model model) {
         model.addAttribute("title", "Penguin - Home");
         return "index";
     }
 
+    /**
+     * Handler method for the dashboard page.
+     *
+     * @param model     The model to add attributes for rendering the view.
+     * @param principal The authenticated user.
+     * @return The name of the view template for the dashboard page.
+     * @throws UsernameNotFoundException if the user cannot be found.
+     */
     @GetMapping("/dashboard")
     private String dashboard(Model model, Principal principal) {
         Optional<AppUser> user = userService.findByUsername(principal.getName());
@@ -50,6 +67,12 @@ public class HomeController {
         return "/dashboard/home";
     }
 
+    /**
+     * Handler method for the features page.
+     *
+     * @param model The model to add attributes for rendering the view.
+     * @return The name of the view template for the features page.
+     */
     @GetMapping("/features")
     private String features(Model model) {
         model.addAttribute("title", "Penguin - Features");

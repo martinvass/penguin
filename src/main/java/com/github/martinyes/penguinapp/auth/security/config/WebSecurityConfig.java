@@ -14,10 +14,13 @@ import org.springframework.security.crypto.argon2.Argon2PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
+/**
+ * Configuration class for Spring Security.
+ */
 @EnableWebSecurity
 @Configuration
 @AllArgsConstructor
-public class SecurityConfig {
+public class WebSecurityConfig {
 
     private final AppUserService appUserService;
     private final Argon2PasswordEncoder argon2PasswordEncoder;
@@ -36,6 +39,13 @@ public class SecurityConfig {
     private final String LOGIN_FAIL_URL = LOGIN_URL + "?error=true";
     private final String DEFAULT_SUCCESS_URL = "/dashboard";
 
+    /**
+     * Configures Spring Security's filter chain.
+     *
+     * @param http HttpSecurity instance to configure.
+     * @return Configured SecurityFilterChain instance.
+     * @throws Exception If an error occurs while configuring.
+     */
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         return http
@@ -61,6 +71,13 @@ public class SecurityConfig {
                 .build();
     }
 
+    /**
+     * Creates and configures an AuthenticationManager.
+     *
+     * @param http HttpSecurity instance used to access the AuthenticationManagerBuilder.
+     * @return AuthenticationManager instance.
+     * @throws Exception If an error occurs while configuring.
+     */
     @Bean
     public AuthenticationManager authManager(HttpSecurity http) throws Exception {
         AuthenticationManagerBuilder authenticationManagerBuilder =
@@ -70,6 +87,11 @@ public class SecurityConfig {
         return authenticationManagerBuilder.build();
     }
 
+    /**
+     * Creates and configures a DaoAuthenticationProvider.
+     *
+     * @return Configured DaoAuthenticationProvider instance.
+     */
     @Bean
     public DaoAuthenticationProvider daoAuthenticationProvider() {
         DaoAuthenticationProvider provider =

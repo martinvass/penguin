@@ -12,6 +12,9 @@ import jakarta.persistence.*;
 
 import java.sql.Date;
 
+/**
+ * Entity class representing a server.
+ */
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
@@ -54,13 +57,31 @@ public class Server {
     @JoinColumn(name = "user_id")
     private AppUser user;
 
+    /**
+     * Enum representing the status of a server.
+     */
     @Getter
     @AllArgsConstructor
     public enum ServerStatus {
+
+        /**
+         * Status indicating the server's status is unknown.
+         */
         UNKNOWN("Unknown"),
+
+        /**
+         * Status indicating the server is up and running.
+         */
         UP("Server Up"),
+
+        /**
+         * Status indicating the server is down or not reachable.
+         */
         DOWN("Server Down");
 
+        /**
+         * The display name of the server status.
+         */
         private final String name;
     }
 }

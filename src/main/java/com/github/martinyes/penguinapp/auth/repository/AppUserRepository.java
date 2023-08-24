@@ -7,6 +7,10 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
+/**
+ * Repository interface for accessing and managing {@link AppUser} entities.
+ * Provides methods to interact with the underlying data store.
+ */
 @Repository
 @Transactional(readOnly = true)
 public interface AppUserRepository extends JpaRepository<AppUser, Long> {

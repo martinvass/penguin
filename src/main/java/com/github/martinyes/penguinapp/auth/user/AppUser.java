@@ -18,6 +18,9 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
+/**
+ * Class representing an application user implementing Spring Security's UserDetails interface.
+ */
 @Getter
 @Setter
 @ToString

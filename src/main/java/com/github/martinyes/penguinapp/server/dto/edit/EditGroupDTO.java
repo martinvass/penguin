@@ -2,6 +2,9 @@ package com.github.martinyes.penguinapp.server.dto.edit;
 
 import lombok.*;
 
+/**
+ * Data Transfer Object (DTO) class for editing a server group.
+ */
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter

@@ -5,12 +5,14 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+/**
+ * Data Transfer Object (DTO) class for editing a user.
+ */
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 public class EditUserDTO {
 
-    private String username;
-    private String email;
+    private String username, email;
 }
