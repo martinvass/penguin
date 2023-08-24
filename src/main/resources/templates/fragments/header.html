@@ -32,8 +32,12 @@
                         <a class="nav-link btn-link px-3 btn" th:href="@{/dashboard}" href="/dashboard">Dashboard</a>
                     </li>
 
-                    <li class="nav-item">
-                        <a class="nav-link btn-link px-3 btn" sec:authorize="!isAuthenticated()" th:href="@{/features}" href="/features">Features</a>
+                    <li class="nav-item" sec:authorize="hasAuthority('ADMIN')">
+                        <a class="nav-link btn-link px-3 btn" th:href="@{/}" href="#">Admin Panel</a>
+                    </li>
+
+                    <li class="nav-item" sec:authorize="!isAuthenticated()">
+                        <a class="nav-link btn-link px-3 btn" th:href="@{/features}" href="/features">Features</a>
                     </li>
 
                     <li class="nav-item">
@@ -46,8 +50,8 @@
                         <a class="nav-link d-sm-flex align-items-sm-center" th:href="@{/auth/user}">
                             <span><i class="fa fa-user"></i></span>
                             <strong sec:authentication="name" class="d-none d-sm-block ms-1"></strong>
-                            <strong style="color: #b90202;" sec:authorize="hasRole('ADMIN')">&nbsp;[A]</strong>
-                            <strong style="color: #4900d7;" sec:authorize="hasRole('TEST')">&nbsp;[T]</strong>
+                            <strong style="color: #b90202;" sec:authorize="hasAuthority('ADMIN')">&nbsp;[A]</strong>
+                            <strong style="color: #4900d7;" sec:authorize="hasAuthority('TEST')">&nbsp;[T]</strong>
                         </a>
                     </li>
 

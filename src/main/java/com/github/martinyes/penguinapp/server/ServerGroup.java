@@ -6,6 +6,7 @@ import jakarta.validation.constraints.NotEmpty;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -32,6 +33,9 @@ public class ServerGroup {
 
     @Column
     private String description;
+
+    @Column
+    private Date creationDate = new Date(System.currentTimeMillis());
 
     @ManyToOne
     @JoinColumn(name = "user_id")

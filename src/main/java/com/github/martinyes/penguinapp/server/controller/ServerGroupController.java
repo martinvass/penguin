@@ -4,9 +4,10 @@ import com.github.martinyes.penguinapp.auth.user.AppUser;
 import com.github.martinyes.penguinapp.auth.user.service.AppUserService;
 import com.github.martinyes.penguinapp.server.Server;
 import com.github.martinyes.penguinapp.server.ServerGroup;
+import com.github.martinyes.penguinapp.server.dto.edit.EditGroupDTO;
 import com.github.martinyes.penguinapp.util.DeleteOption;
 import com.github.martinyes.penguinapp.util.RadioFormDeleteOption;
-import com.github.martinyes.penguinapp.server.data.create.CreateGroupData;
+import com.github.martinyes.penguinapp.server.dto.create.CreateGroupDTO;
 import com.github.martinyes.penguinapp.server.service.ServerGroupService;
 import com.github.martinyes.penguinapp.server.service.ServerService;
 import lombok.AllArgsConstructor;
@@ -26,6 +27,17 @@ public class ServerGroupController {
     private final ServerService serverService;
     private final ServerGroupService serverGroupService;
 
+    @PostMapping("/dashboard/group/create")
+    private String createGroup(Principal principal, @ModelAttribute("createGroupDTO") CreateGroupDTO dto) {
+        Optional<AppUser> user = userService.findByUsername(principal.getName());
+
+        if (user.isEmpty())
+            throw new UsernameNotFoundException(principal.getName());
+
+        serverGroupService.create(user.get(), dto);
+        return "redirect:/dashboard";
+    }
+
     @PostMapping("/dashboard/group/delete")
     private String deleteGroup(@RequestParam("groupId") Long id, @ModelAttribute("radioForm") RadioFormDeleteOption radioForm) {
         DeleteOption deleteOption = radioForm.getDeleteOption();
@@ -35,38 +47,31 @@ public class ServerGroupController {
         return "redirect:/dashboard";
     }
 
-    @PostMapping("/dashboard/group/create")
-    private String createGroup(Principal principal, @RequestParam("groupName") String groupName,
-                               @RequestParam("groupDesc") String groupDesc) {
-        Optional<AppUser> user = userService.findByUsername(principal.getName());
-
-        if (user.isEmpty())
-            throw new UsernameNotFoundException(principal.getName());
-
-        CreateGroupData data = new CreateGroupData(user.get(), groupName, groupDesc);
-        serverGroupService.create(data);
+    @PostMapping("/dashboard/group/edit")
+    private String editGroup(@RequestParam("groupEditId") Long id, @ModelAttribute("editGroupDTO") EditGroupDTO dto) {
+        serverGroupService.edit(id, dto);
         return "redirect:/dashboard";
     }
 
     @PostMapping("/dashboard/group/add")
     private String addServerToGroup(@RequestParam("groupId") Long groupId, @RequestParam("serverName") String serverName) {
-        serverGroupService.addServerToGroup(
-                serverGroupService.findById(groupId).orElseThrow(),
-                serverService.findByName(serverName).orElseThrow()
-        );
-        return String.format("redirect:/dashboard/groups/%s", serverGroupService.findById(groupId).get().getName());
-    }
-
-    @PostMapping("/dashboard/group/remove")
-    private String removeServerFromGroup(@RequestParam("serverId") Long serverId) {
-        Optional<Server> server = serverService.findById(serverId);
+        ServerGroup group = serverGroupService.get(groupId);
+        Optional<Server> server = serverService.findByName(serverName);
 
         if (server.isEmpty())
             throw new RuntimeException("server not found");
 
-        ServerGroup group = server.get().getServerGroup();
+        serverGroupService.addServerToGroup(group, server.get());
 
-        serverGroupService.removeServerFromGroup(server.get());
+        return String.format("redirect:/dashboard/groups/%s", group.getName());
+    }
+
+    @PostMapping("/dashboard/group/remove")
+    private String removeServerFromGroup(@RequestParam("serverId") Long serverId) {
+        Server server = serverService.get(serverId);
+        ServerGroup group = server.getServerGroup();
+
+        serverGroupService.removeServerFromGroup(server);
         return String.format("redirect:/dashboard/groups/%s", group.getName());
     }
 

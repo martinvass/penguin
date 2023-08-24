@@ -3,7 +3,8 @@ package com.github.martinyes.penguinapp.server.service.impl;
 import com.github.martinyes.penguinapp.auth.user.AppUser;
 import com.github.martinyes.penguinapp.server.Server;
 import com.github.martinyes.penguinapp.server.ServerGroup;
-import com.github.martinyes.penguinapp.server.data.create.CreateGroupData;
+import com.github.martinyes.penguinapp.server.dto.create.CreateGroupDTO;
+import com.github.martinyes.penguinapp.server.dto.edit.EditGroupDTO;
 import com.github.martinyes.penguinapp.server.repository.ServerGroupRepository;
 import com.github.martinyes.penguinapp.server.service.ServerGroupService;
 import com.github.martinyes.penguinapp.server.service.ServerService;
@@ -36,11 +37,11 @@ public class ServerGroupServiceImpl implements ServerGroupService {
     }
 
     @Override
-    public void create(CreateGroupData data) {
+    public void create(AppUser user, CreateGroupDTO dto) {
         ServerGroup group = new ServerGroup();
-        group.setUser(data.getUser());
-        group.setName(data.getGroupName());
-        group.setDescription(data.getGroupDesc().isEmpty() ? "" : data.getGroupDesc());
+        group.setUser(user);
+        group.setName(dto.getGroupName());
+        group.setDescription(dto.getGroupDesc().isEmpty() ? "" : dto.getGroupDesc());
 
         serverGroupRepository.save(group);
     }
@@ -49,7 +50,7 @@ public class ServerGroupServiceImpl implements ServerGroupService {
     public void delete(Long id, boolean deleteServers) {
         Optional<ServerGroup> group = serverGroupRepository.findById(id);
         if (group.isEmpty())
-            return;
+            throw new RuntimeException("group not found");
 
         if (deleteServers) {
             group.get().getServers().stream().map(Server::getId).forEach(serverService::delete);
@@ -64,6 +65,22 @@ public class ServerGroupServiceImpl implements ServerGroupService {
     }
 
     @Override
+    public void edit(Long id, EditGroupDTO dto) {
+        Optional<ServerGroup> group = serverGroupRepository.findById(id);
+        if (group.isEmpty())
+            throw new RuntimeException("group not found");
+
+        group.get().setName(dto.getGroupName());
+        group.get().setDescription(dto.getGroupDesc());
+        serverGroupRepository.save(group.get());
+    }
+
+    @Override
+    public void save(ServerGroup serverGroup) {
+        serverGroupRepository.save(serverGroup);
+    }
+
+    @Override
     public void addServerToGroup(ServerGroup group, Server server) {
         server.setServerGroup(group);
         serverService.save(server);
@@ -73,5 +90,15 @@ public class ServerGroupServiceImpl implements ServerGroupService {
     public void removeServerFromGroup(Server server) {
         server.setServerGroup(null);
         serverService.save(server);
+    }
+
+    @Override
+    public ServerGroup get(Long id) {
+        Optional<ServerGroup> group = serverGroupRepository.findById(id);
+
+        if (group.isEmpty())
+            throw new RuntimeException("group not found");
+
+        return group.get();
     }
 }

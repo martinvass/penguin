@@ -10,6 +10,8 @@ import lombok.NoArgsConstructor;
 
 import jakarta.persistence.*;
 
+import java.sql.Date;
+
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
@@ -40,6 +42,9 @@ public class Server {
 
     @Enumerated(EnumType.STRING)
     private ServerStatus serverStatus = ServerStatus.UNKNOWN;
+
+    @Column
+    private Date creationDate = new Date(System.currentTimeMillis());
 
     @ManyToOne
     @JoinColumn(name = "server_group_id")
