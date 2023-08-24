@@ -35,7 +35,7 @@ public class ServerGroupController {
             throw new UsernameNotFoundException(principal.getName());
 
         serverGroupService.create(user.get(), dto);
-        return "redirect:/dashboard";
+        return "redirect:/dashboard#groups";
     }
 
     @PostMapping("/dashboard/group/delete")
@@ -44,13 +44,13 @@ public class ServerGroupController {
         boolean deleteServers = deleteOption == DeleteOption.YES;
 
         serverGroupService.delete(id, deleteServers);
-        return "redirect:/dashboard";
+        return "redirect:/dashboard#groups";
     }
 
     @PostMapping("/dashboard/group/edit")
     private String editGroup(@RequestParam("groupEditId") Long id, @ModelAttribute("editGroupDTO") EditGroupDTO dto) {
         serverGroupService.edit(id, dto);
-        return "redirect:/dashboard";
+        return "redirect:/dashboard#groups";
     }
 
     @PostMapping("/dashboard/group/add")

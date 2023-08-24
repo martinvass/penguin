@@ -30,13 +30,13 @@ public class ServerController {
             throw new UsernameNotFoundException(principal.getName());
 
         serverService.create(user.get(), dto);
-        return "redirect:/dashboard";
+        return "redirect:/dashboard#servers";
     }
 
     @PostMapping("/dashboard/server/delete")
     private String deleteServer(@RequestParam("serverId") Long id) {
         serverService.delete(id);
-        return "redirect:/dashboard";
+        return "redirect:/dashboard#servers";
     }
 
     @PostMapping("/dashboard/server/edit")
@@ -49,6 +49,6 @@ public class ServerController {
         );
 
         serverService.edit(id, editData);
-        return "redirect:/dashboard";
+        return "redirect:/dashboard#servers";
     }
 }
