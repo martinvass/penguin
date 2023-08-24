@@ -2,7 +2,7 @@ package com.github.martinyes.penguinapp.auth.user.service.impl;
 
 import com.github.martinyes.penguinapp.auth.user.AppUser;
 import com.github.martinyes.penguinapp.auth.repository.AppUserRepository;
-import com.github.martinyes.penguinapp.auth.user.edit.EditData;
+import com.github.martinyes.penguinapp.auth.user.dto.EditUserDTO;
 import com.github.martinyes.penguinapp.auth.user.exception.UserAlreadyExistsException;
 import com.github.martinyes.penguinapp.auth.user.service.AppUserService;
 import lombok.AllArgsConstructor;
@@ -57,9 +57,9 @@ public class AppUserServiceImpl implements AppUserService, UserDetailsService {
     }
 
     @Override
-    public void editUser(AppUser user, EditData data) {
-        user.setUsername(data.getUsername());
-        user.setEmail(data.getEmail());
+    public void editUser(AppUser user, EditUserDTO dto) {
+        user.setUsername(dto.getUsername());
+        user.setEmail(dto.getEmail());
 
         appUserRepository.save(user);
     }
@@ -81,6 +81,4 @@ public class AppUserServiceImpl implements AppUserService, UserDetailsService {
                         new UsernameNotFoundException(
                                 String.format(USER_NOT_FOUND_MSG, username)));
     }
-
-
 }

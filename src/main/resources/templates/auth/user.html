@@ -4,31 +4,7 @@
 <body>
     <div th:replace="~{fragments/header :: header}"></div>
 
-    <div class="container mt-3">
-        <!-- Error Message Toast for account deactivation -->
-        <div th:if="${(param.deactivation != null) and (param.deactivation[0] == 'failure')}"
-             class="toast align-items-center text-white bg-danger border-0 position-fixed top-0 end-0"
-             role="alert" aria-live="assertive" aria-atomic="true" style="margin-top: 75px; margin-right: 10px">
-            <div class="d-flex">
-                <div class="toast-body">
-                    Account deactivation failed. Please make sure you entered the correct password.
-                </div>
-                <button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
-            </div>
-        </div>
-
-        <!-- Error Message Toast for account deletion -->
-        <div th:if="${(param.deletion != null) and (param.deletion[0] == 'failure')}"
-             class="toast align-items-center text-white bg-danger border-0 position-fixed top-0 end-0"
-             role="alert" aria-live="assertive" aria-atomic="true" style="margin-top: 75px; margin-right: 10px">
-            <div class="d-flex">
-                <div class="toast-body">
-                    Account deletion failed. Please make sure you entered the correct password.
-                </div>
-                <button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
-            </div>
-        </div>
-    </div>
+    <div th:replace="~{alerts/userAlerts :: userAlerts}"></div>
 
     <div class="container">
         <div th:object="${user}" class="user-container">

@@ -1,7 +1,7 @@
 package com.github.martinyes.penguinapp.auth.user.controller;
 
 import com.github.martinyes.penguinapp.auth.user.AppUser;
-import com.github.martinyes.penguinapp.auth.user.edit.EditData;
+import com.github.martinyes.penguinapp.auth.user.dto.EditUserDTO;
 import com.github.martinyes.penguinapp.auth.user.exception.UserAlreadyExistsException;
 import com.github.martinyes.penguinapp.auth.user.service.AppUserService;
 import jakarta.servlet.http.HttpServletRequest;
@@ -77,7 +77,7 @@ public class AuthController {
         new SecurityContextLogoutHandler().logout(
                 request, response, SecurityContextHolder.getContext().getAuthentication()
         );
-        userService.editUser(user.get(), new EditData(username, email));
+        userService.editUser(user.get(), new EditUserDTO(username, email));
 
         return "redirect:/auth/login?userEditSuccess";
     }

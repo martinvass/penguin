@@ -5,51 +5,7 @@
 
     <div th:replace="~{fragments/header :: header}"></div>
 
-    <div class="container mt-3">
-        <div th:if="${param.success}"
-             class="toast align-items-center text-white bg-success border-0 position-fixed top-0 end-0"
-             role="alert" aria-live="assertive" aria-atomic="true" style="margin-top: 75px; margin-right: 10px">
-            <div class="d-flex">
-                <div class="toast-body">
-                    You have successfully registered. Please check you email for activation link.
-                </div>
-                <button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
-            </div>
-        </div>
-
-        <div th:if="${param.logout}"
-             class="toast align-items-center text-white bg-success border-0 position-fixed top-0 end-0"
-             role="alert" aria-live="assertive" aria-atomic="true" style="margin-top: 75px; margin-right: 10px">
-            <div class="d-flex">
-                <div class="toast-body">
-                    You have been logged out.
-                </div>
-                <button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
-            </div>
-        </div>
-
-        <div th:if="${param.userEditSuccess}"
-             class="toast align-items-center text-white bg-success border-0 position-fixed top-0 end-0"
-             role="alert" aria-live="assertive" aria-atomic="true" style="margin-top: 75px; margin-right: 10px">
-            <div class="d-flex">
-                <div class="toast-body">
-                    You have successfully edited your account details.
-                </div>
-                <button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
-            </div>
-        </div>
-
-        <div th:if="${param.error}"
-             class="toast align-items-center text-white bg-danger border-0 position-fixed top-0 end-0"
-             role="alert" aria-live="assertive" aria-atomic="true" style="margin-top: 75px; margin-right: 10px">
-            <div class="d-flex">
-                <div class="toast-body">
-                    Authentication Failed: The credentials provided are invalid.
-                </div>
-                <button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
-            </div>
-        </div>
-    </div>
+    <div th:replace="~{alerts/loginAlerts :: loginAlerts}"></div>
 
     <div class="container">
         <div class="auth-container">
