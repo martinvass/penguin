@@ -4,6 +4,8 @@ import com.github.martinyes.penguinapp.auth.user.AppUser;
 import com.github.martinyes.penguinapp.server.ServerGroup;
 import com.github.martinyes.penguinapp.server.dto.create.CreateServerDTO;
 import com.github.martinyes.penguinapp.server.dto.edit.EditServerDTO;
+import com.github.martinyes.penguinapp.server.exception.ServerGroupNotFoundException;
+import com.github.martinyes.penguinapp.server.exception.ServerNotFoundException;
 import com.github.martinyes.penguinapp.server.repository.ServerGroupRepository;
 import com.github.martinyes.penguinapp.server.repository.ServerRepository;
 import com.github.martinyes.penguinapp.server.Server;
@@ -100,7 +102,8 @@ public class ServerServiceImpl implements ServerService {
         if (!Objects.equals(editServerDTO.getServerGroupName(), "0")) {
             Optional<ServerGroup> serverGroup = serverGroupRepository.findByName(editServerDTO.getServerGroupName());
 
-            if (serverGroup.isEmpty()) throw new RuntimeException("group not found");
+            if (serverGroup.isEmpty())
+                throw new ServerGroupNotFoundException("Group not found");
 
             group = serverGroup.get();
         }
@@ -129,14 +132,14 @@ public class ServerServiceImpl implements ServerService {
      *
      * @param id The ID of the server to get.
      * @return The found server.
-     * @throws RuntimeException if the server is not found.
+     * @throws ServerNotFoundException if the server is not found.
      */
     @Override
     public Server get(Long id) {
         Optional<Server> server = findById(id);
 
         if (server.isEmpty())
-            throw new RuntimeException("server not found");
+            throw new ServerNotFoundException(String.format("Server not found with id %d", id));
 
         return server.get();
     }

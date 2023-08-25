@@ -3,6 +3,10 @@
 <head th:replace="~{fragments/header :: html_header}"></head>
 <body>
     <div th:replace="~{fragments/header :: header}"></div>
+
+    <div th:replace="~{alerts/serverAlerts :: serverAlerts}"></div>
+    <div th:replace="~{alerts/serverGroupAlerts :: serverGroupAlerts}"></div>
+
     <div class="container">
         <div class="p-5 text-center bg-light" style="margin-top: 58px;">
             <h1 class="mb-3"><b>Dashboard</b></h1>
@@ -165,11 +169,11 @@
                             <input type="hidden" id="serverEditId" name="serverEditId" th:value="-1" />
                             <div class="mb-3">
                                 <label for="serverNameEdit" class="form-label">Server name</label>
-                                <input th:field="*{serverName}" type="text" class="form-control" id="serverNameEdit" name="serverNameEdit">
+                                <input th:field="*{serverName}" type="text" class="form-control" id="serverNameEdit" name="serverNameEdit" required>
                             </div>
                             <div class="mb-3">
                                 <label for="serverAddrEdit" class="form-label">Server address</label>
-                                <input th:field="*{serverAddr}" type="text" class="form-control" id="serverAddrEdit" name="serverAddrEdit">
+                                <input th:field="*{serverAddr}" type="text" class="form-control" id="serverAddrEdit" name="serverAddrEdit" required>
                             </div>
                             <div class="mb-3">
                                 <label for="serverDescEdit" class="form-label">Server description</label>
@@ -209,7 +213,7 @@
                             <input type="hidden" id="groupEditId" name="groupEditId" th:value="-1" />
                             <div class="mb-3">
                                 <label for="groupNameEdit" class="form-label">Group name</label>
-                                <input th:field="*{groupName}" type="text" class="form-control" id="groupNameEdit" name="groupNameEdit">
+                                <input th:field="*{groupName}" type="text" class="form-control" id="groupNameEdit" name="groupNameEdit" required>
                             </div>
                             <div class="mb-3">
                                 <label for="groupDescEdit" class="form-label">Group description</label>

@@ -4,6 +4,7 @@ import com.github.martinyes.penguinapp.auth.user.AppUser;
 import com.github.martinyes.penguinapp.auth.user.service.AppUserService;
 import com.github.martinyes.penguinapp.server.dto.create.CreateServerDTO;
 import com.github.martinyes.penguinapp.server.dto.edit.EditServerDTO;
+import com.github.martinyes.penguinapp.server.exception.ServerGroupNotFoundException;
 import com.github.martinyes.penguinapp.server.service.ServerService;
 import lombok.AllArgsConstructor;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -41,7 +42,7 @@ public class ServerController {
             throw new UsernameNotFoundException(principal.getName());
 
         serverService.create(user.get(), dto);
-        return "redirect:/dashboard#servers";
+        return "redirect:/dashboard?create=success#servers";
     }
 
     /**
@@ -53,7 +54,7 @@ public class ServerController {
     @PostMapping("/dashboard/server/delete")
     private String deleteServer(@RequestParam("serverId") Long id) {
         serverService.delete(id);
-        return "redirect:/dashboard#servers";
+        return "redirect:/dashboard?delete=success#servers";
     }
 
     /**
@@ -72,7 +73,11 @@ public class ServerController {
                 dto.getServerGroupName()
         );
 
-        serverService.edit(id, editData);
-        return "redirect:/dashboard#servers";
+        try {
+            serverService.edit(id, editData);
+        } catch (ServerGroupNotFoundException e) {
+            return "redirect:/dashboard?edit=failure#servers";
+        }
+        return "redirect:/dashboard?edit=success#servers";
     }
 }

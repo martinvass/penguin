@@ -75,7 +75,7 @@ public interface ServerGroupService {
      *
      * @param id The ID of the server group to get.
      * @return The found server group.
-     * @throws RuntimeException if the server group is not found.
+     * @throws com.github.martinyes.penguinapp.server.exception.ServerGroupNotFoundException if the server group is not found.
      */
     ServerGroup get(Long id);
 

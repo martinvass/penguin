@@ -2,7 +2,7 @@
 
 Penguin is a server status tracking application that allows you to monitor the status of your servers in real-time and take informed actions based on their status changes.
 
-## Key Features
+## Key Features 🚀
 
 - 🔍 Real-time Monitoring: Track the status of your servers in real-time with instant updates.
 - 🌐 Server Grouping: Organize your servers into groups for easier management and monitoring.
@@ -19,7 +19,7 @@ To explore the features of Penguin before registering, you can use the following
 - Password: test123
 - URL: https://penguin.lexium.site/auth/login
 
-## Getting Started
+## Getting Started 📦
 
 Follow these steps to add a server to your Penguin application:
 

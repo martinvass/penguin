@@ -37,7 +37,6 @@ public class Server {
     private String address;
 
     @NotEmpty(message = "Server name cannot be null")
-    @Column(unique = true)
     private String name;
 
     @Column

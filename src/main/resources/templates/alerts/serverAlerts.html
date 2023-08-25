@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/header :: html_header}"></head>
+<body>
+<div th:fragment="serverAlerts" class="container mt-3">
+    <!-- Success Message Toast for server creation -->
+    <div th:if="${(param.create != null) and (param.create[0] == 'success')}"
+         class="toast align-items-center text-white bg-success border-0 position-fixed top-0 end-0"
+         role="alert" aria-live="assertive" aria-atomic="true" style="margin-top: 75px; margin-right: 10px">
+        <div class="d-flex">
+            <div class="toast-body">
+                You have successfully created a server.
+            </div>
+            <button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+    </div>
+
+    <!-- Success Message Toast for server edit -->
+    <div th:if="${(param.edit != null) and (param.edit[0] == 'success')}"
+         class="toast align-items-center text-white bg-success border-0 position-fixed top-0 end-0"
+         role="alert" aria-live="assertive" aria-atomic="true" style="margin-top: 75px; margin-right: 10px">
+        <div class="d-flex">
+            <div class="toast-body">
+                You have successfully edited your server details.
+            </div>
+            <button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+    </div>
+
+    <!-- Error Message Toast for server edit -->
+    <div th:if="${(param.edit != null) and (param.edit[0] == 'failure')}"
+         class="toast align-items-center text-white bg-danger border-0 position-fixed top-0 end-0"
+         role="alert" aria-live="assertive" aria-atomic="true" style="margin-top: 75px; margin-right: 10px">
+        <div class="d-flex">
+            <div class="toast-body">
+                An error occurred while modifying the server: Server group not found.
+            </div>
+            <button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+    </div>
+
+    <!-- Success Message Toast for server deletion -->
+    <div th:if="${(param.delete != null) and (param.delete[0] == 'success')}"
+         class="toast align-items-center text-white bg-success border-0 position-fixed top-0 end-0"
+         role="alert" aria-live="assertive" aria-atomic="true" style="margin-top: 75px; margin-right: 10px">
+        <div class="d-flex">
+            <div class="toast-body">
+                You have successfully deleted your server.
+            </div>
+            <button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+    </div>
+</div>
+</body>
+</html>

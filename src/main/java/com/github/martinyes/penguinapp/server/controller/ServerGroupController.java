@@ -5,6 +5,8 @@ import com.github.martinyes.penguinapp.auth.user.service.AppUserService;
 import com.github.martinyes.penguinapp.server.Server;
 import com.github.martinyes.penguinapp.server.ServerGroup;
 import com.github.martinyes.penguinapp.server.dto.edit.EditGroupDTO;
+import com.github.martinyes.penguinapp.server.exception.ServerGroupNotFoundException;
+import com.github.martinyes.penguinapp.server.exception.ServerNotFoundException;
 import com.github.martinyes.penguinapp.util.DeleteOption;
 import com.github.martinyes.penguinapp.util.RadioFormDeleteOption;
 import com.github.martinyes.penguinapp.server.dto.create.CreateGroupDTO;
@@ -46,7 +48,7 @@ public class ServerGroupController {
             throw new UsernameNotFoundException(principal.getName());
 
         serverGroupService.create(user.get(), dto);
-        return "redirect:/dashboard#groups";
+        return "redirect:/dashboard?createGroup=success#groups";
     }
 
     /**
@@ -61,8 +63,12 @@ public class ServerGroupController {
         DeleteOption deleteOption = radioForm.getDeleteOption();
         boolean deleteServers = deleteOption == DeleteOption.YES;
 
-        serverGroupService.delete(id, deleteServers);
-        return "redirect:/dashboard#groups";
+        try {
+            serverGroupService.delete(id, deleteServers);
+        } catch (ServerGroupNotFoundException e) {
+            return "redirect:/dashboard?delGroup=failure#groups";
+        }
+        return "redirect:/dashboard?delGroup=success#groups";
     }
 
     /**
@@ -74,8 +80,12 @@ public class ServerGroupController {
      */
     @PostMapping("/dashboard/group/edit")
     private String editGroup(@RequestParam("groupEditId") Long id, @ModelAttribute("editGroupDTO") EditGroupDTO dto) {
-        serverGroupService.edit(id, dto);
-        return "redirect:/dashboard#groups";
+        try {
+            serverGroupService.edit(id, dto);
+        } catch (ServerGroupNotFoundException e) {
+            return "redirect:/dashboard?editGroup=failure#groups";
+        }
+        return "redirect:/dashboard?editGroup=success#groups";
     }
 
     /**
@@ -91,11 +101,11 @@ public class ServerGroupController {
         Optional<Server> server = serverService.findByName(serverName);
 
         if (server.isEmpty())
-            throw new RuntimeException("server not found");
+            throw new ServerNotFoundException(String.format("Server not found with name %s", serverName));
 
         serverGroupService.addServerToGroup(group, server.get());
 
-        return String.format("redirect:/dashboard/groups/%s", group.getName());
+        return String.format("redirect:/dashboard/groups/%s?add=success", group.getName());
     }
 
     /**
@@ -110,7 +120,7 @@ public class ServerGroupController {
         ServerGroup group = server.getServerGroup();
 
         serverGroupService.removeServerFromGroup(server);
-        return String.format("redirect:/dashboard/groups/%s", group.getName());
+        return String.format("redirect:/dashboard/groups/%s?remove=success", group.getName());
     }
 
     /**
@@ -126,7 +136,7 @@ public class ServerGroupController {
         Optional<ServerGroup> group = serverGroupService.findByName(name);
 
         if (group.isEmpty())
-            throw new RuntimeException("group not found");
+            throw new ServerGroupNotFoundException(String.format("Group not found with name %s", name));
 
         model.addAttribute("group", group.get());
         model.addAttribute("servers", serverService.findByUser(

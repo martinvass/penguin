@@ -73,7 +73,7 @@ public interface ServerService {
      *
      * @param id The ID of the server to get.
      * @return The found server.
-     * @throws RuntimeException if the server is not found.
+     * @throws com.github.martinyes.penguinapp.server.exception.ServerNotFoundException if the server is not found.
      */
     Server get(Long id);
 }
