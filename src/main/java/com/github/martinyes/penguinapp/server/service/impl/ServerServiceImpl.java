@@ -10,12 +10,18 @@ import com.github.martinyes.penguinapp.server.repository.ServerGroupRepository;
 import com.github.martinyes.penguinapp.server.repository.ServerRepository;
 import com.github.martinyes.penguinapp.server.Server;
 import com.github.martinyes.penguinapp.server.service.ServerService;
+import com.github.martinyes.penguinapp.util.AppUtils;
 import lombok.AllArgsConstructor;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Implementation of the {@link ServerService} interface.
@@ -128,6 +134,41 @@ public class ServerServiceImpl implements ServerService {
     }
 
     /**
+     * Pings a server based on the given serverID.
+     *
+     * @param serverId The ID of the server to ping.
+     * @return The server status given in String after the ping.
+     */
+    @Override
+    public boolean ping(Long serverId) {
+        Server server = get(serverId);
+
+        if (!AppUtils.isIPv4Address(server.getAddress())) {
+            try {
+                URL url = new URL(server.getAddress());
+                HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+                connection.setRequestMethod("HEAD");
+                int responseCode = connection.getResponseCode();
+
+                return responseCode == HttpURLConnection.HTTP_OK;
+            } catch (IOException e) {
+                return false;
+            }
+        }
+
+        try {
+            boolean isWindows = System.getProperty("os.name").toLowerCase().contains("win");
+
+            ProcessBuilder processBuilder = new ProcessBuilder("ping",
+                    isWindows? "-n" : "-c", "1", server.getAddress());
+            Process proc = processBuilder.start();
+            return proc.waitFor(200, TimeUnit.MILLISECONDS);
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
+    /**
      * Gets a server by its ID.
      *
      * @param id The ID of the server to get.
@@ -142,5 +183,16 @@ public class ServerServiceImpl implements ServerService {
             throw new ServerNotFoundException(String.format("Server not found with id %d", id));
 
         return server.get();
+    }
+
+    @Scheduled(fixedRate = 10000)
+    public void updateServerStatus() {
+        List<Server> servers = serverRepository.findAll();
+        for (Server server : servers) {
+            boolean res = ping(server.getId());
+
+            server.setServerStatus(res ? Server.ServerStatus.UP : Server.ServerStatus.DOWN);
+            serverRepository.save(server);
+        }
     }
 }

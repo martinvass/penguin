@@ -69,6 +69,14 @@ public interface ServerService {
     void save(Server server);
 
     /**
+     * Pings a server based on the given serverID.
+     *
+     * @param serverId The ID of the server to ping.
+     * @return If the ping was successful.
+     */
+    boolean ping(Long serverId);
+
+    /**
      * Gets a server by its ID.
      *
      * @param id The ID of the server to get.

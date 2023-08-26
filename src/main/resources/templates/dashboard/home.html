@@ -270,10 +270,10 @@
                                     <span class="server-group-name" th:if="${server.serverGroup != null}" th:text="' (' + ${server.serverGroup.name} + ')'">(Group 1)</span>
                                 </div>
                                 <div th:text="${server.address}">127.0.0.1</div>
-                                <div th:text="${server.serverStatus}"
-                                     th:class="${server.serverStatus == 'ONLINE' ? 'server-status-online' :
-            (server.serverStatus == 'OFFLINE' ? 'server-status-offline' : 'server-status-unknown')}">
-                                    Offline
+                                <div id="server-status" th:data-server-update-id="${server.id}" th:text="${server.serverStatus.name}"
+                                     th:class="${server.serverStatus.name() == 'UP' ? 'server-status-online' :
+                (server.serverStatus.name() == 'DOWN' ? 'server-status-offline' : 'server-status-unknown')}">
+                                    Server Down
                                 </div>
                             </div>
                         </div>
@@ -344,79 +344,9 @@
             tabElement.classList.toggle("show", isActive);
             tabElement.classList.toggle("active", isActive);
         });
-
-        editActions();
-        deleteActions();
-
-        function editActions() {
-            const editButtons = document.querySelectorAll(".edit-btn");
-
-            // Server inputs
-            const serverIdEditInput = document.getElementById("serverEditId"); // hidden input
-            const serverNameInput = document.getElementById("serverNameEdit");
-            const serverAddressInput = document.getElementById("serverAddrEdit");
-            const serverDescriptionInput = document.getElementById("serverDescEdit");
-
-            // Group inputs
-            const groupEditIdInput = document.getElementById("groupEditId"); // hidden input
-            const groupNameInput = document.getElementById("groupNameEdit");
-            const groupDescInput = document.getElementById("groupDescEdit");
-
-            const serverGroupInput = document.getElementById("serverGroupEdit");
-            const $options = Array.from(serverGroupInput.options);
-
-            editButtons.forEach(button => {
-                button.addEventListener("click", function () {
-                    // Server attributes
-                    const serverId = button.getAttribute("data-server-id");
-                    const serverName = button.getAttribute("data-server-name");
-                    const serverAddress = button.getAttribute("data-server-address");
-                    const serverDescription = button.getAttribute("data-server-description");
-
-                    // Group attributes
-                    const groupId = button.getAttribute("data-group-id");
-                    const groupName = button.getAttribute("data-group-name");
-                    const groupDesc = button.getAttribute("data-group-description");
-
-                    const serverGroup = button.getAttribute("data-server-group");
-                    const optionToSelect = $options.find(item => item.text === serverGroup);
-
-                    // Setting server fields
-                    serverIdEditInput.value = serverId;
-                    serverNameInput.value = serverName;
-                    serverAddressInput.value = serverAddress;
-                    serverDescriptionInput.value = serverDescription;
-                    if (optionToSelect === undefined) {
-                        $options[0].selected = true;
-                        serverGroupInput.value = 0;
-                    }
-                    else {
-                        optionToSelect.selected = true;
-                        serverGroupInput.value = optionToSelect.value;
-                    }
-
-                    // Setting group fields
-                    groupEditIdInput.value = groupId;
-                    groupNameInput.value = groupName;
-                    groupDescInput.value = groupDesc;
-                });
-            });
-        }
-
-        function deleteActions() {
-            const delButtons = document.querySelectorAll(".del-btn");
-
-            const serverIdInput = document.getElementById("serverId");
-            const groupIdInput = document.getElementById("groupId");
-
-            delButtons.forEach(button => {
-                button.addEventListener("click", function () {
-                    serverIdInput.value = button.getAttribute("data-server-id");
-                    groupIdInput.value = button.getAttribute("data-group-id-deletion");
-                });
-            });
-        }
     </script>
-    </div>
+
+    <script th:src="@{/js/serverStatus.js}"></script>
+    <script th:src="@{/js/dashboard.js}"></script>
 </body>
 </html>

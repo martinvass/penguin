@@ -5,7 +5,7 @@ $(document).click(function() {
 
         setTimeout(function() {
             submitButton.html(
-                '<i class="fa fa-circle-o-notch fa-spin"></i> loading...'
+                '<i class="fa fa-circle-o-notch fa-spin"></i> Logging in...'
             );
 
             // Submit the form
@@ -19,7 +19,7 @@ $(document).click(function() {
 
         setTimeout(function() {
             submitButton.html(
-                '<i class="fa fa-circle-o-notch fa-spin"></i> creating...'
+                '<i class="fa fa-circle-o-notch fa-spin"></i> Creating account...'
             );
 
             // Submit the form
