@@ -10,6 +10,8 @@ import com.github.martinyes.penguinapp.util.RadioFormDeleteOption;
 import com.github.martinyes.penguinapp.server.service.ServerGroupService;
 import com.github.martinyes.penguinapp.server.service.ServerService;
 import lombok.AllArgsConstructor;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

@@ -59,14 +59,14 @@
                             <div>
                                 <div th:text="${server.name}" class="server-name">Server 1</div>
                                 <div th:text="${server.address}">127.0.0.1</div>
-                                <div th:text="${server.serverStatus}"
-                                     th:class="${server.serverStatus == 'ONLINE' ? 'server-status-online' :
-                    (server.serverStatus == 'OFFLINE' ? 'server-status-offline' : 'server-status-unknown')}">
-                                    Offline
+                                <div id="server-status" th:text="${server.serverStatus.name}"
+                                     th:class="${server.serverStatus.name() == 'UP' ? 'server-status-online' :
+                (server.serverStatus.name() == 'DOWN' ? 'server-status-offline' : 'server-status-unknown')}">
+                                    Server Down
                                 </div>
                             </div>
                         </div>
-                        <p th:text="${server.description} ?: ${server.description}">Description</p>
+                        <p style="color: #737373" th:text="${server.description} ?: ${server.description}">Description</p>
                         <div class="server-actions">
                             <a href="#" class="btn btn-primary server-action-button">View Details</a>
                             <form method="post"

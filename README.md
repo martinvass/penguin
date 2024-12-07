@@ -29,7 +29,3 @@ Follow these steps to add a server to your Penguin application:
 4. **Server Details**: Enter the required information such as server name, IP address, etc.
 5. **Save**: Click the "Save" button to add the server to your dashboard.
 6. **Monitor**: You'll now see the added server on your dashboard and can monitor its status in real-time.
-
-## Getting Help
-
-If you encounter any issues or have questions, feel free to reach out to us at [support@lexium.site](mailto:support@lexium.site).

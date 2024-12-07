@@ -9,10 +9,10 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.github.martinyes</groupId>
-    <artifactId>penguin-app</artifactId>
+    <artifactId>penguin</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>penguin-app</name>
-    <description>penguin-app</description>
+    <name>penguin</name>
+    <description>penguin</description>
     <properties>
         <java.version>17</java.version>
         <jakarta-servlet.version>5.0.0</jakarta-servlet.version>
@@ -83,10 +83,27 @@
             <artifactId>spring-security-test</artifactId>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-actuator</artifactId>
+        </dependency>
     </dependencies>
 
     <build>
         <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <version>3.4.2</version>
+                <configuration>
+                    <archive>
+                        <index>true</index>
+                        <manifest>
+                            <mainClass>com.github.martinyes.penguinapp.PenguinApplication</mainClass>
+                        </manifest>
+                    </archive>
+                </configuration>
+            </plugin>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>

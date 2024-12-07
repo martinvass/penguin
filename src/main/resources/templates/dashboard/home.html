@@ -237,9 +237,6 @@
             <li class="nav-item">
                 <a class="nav-link" data-bs-toggle="tab" href="#groups">Groups</a>
             </li>
-            <li class="nav-item">
-                <a class="nav-link" data-bs-toggle="tab" href="#settings">Settings</a>
-            </li>
 
             <li class="nav-item flex-grow-1"></li>
             <li class="nav-item">
@@ -267,7 +264,6 @@
                             <div>
                                 <div class="server-name">
                                     <span th:text="${server.name}">Server 1</span>
-                                    <span class="server-group-name" th:if="${server.serverGroup != null}" th:text="' (' + ${server.serverGroup.name} + ')'">(Group 1)</span>
                                 </div>
                                 <div th:text="${server.address}">127.0.0.1</div>
                                 <div id="server-status" th:data-server-update-id="${server.id}" th:text="${server.serverStatus.name}"
@@ -277,7 +273,7 @@
                                 </div>
                             </div>
                         </div>
-                        <p th:text="${server.description} ?: ${server.description}">Description</p>
+                        <p style="color: #737373" th:text="${server.description} ?: ${server.description}">Description</p>
                         <div class="server-actions">
                             <a href="#" class="btn btn-primary server-action-button">View Details</a>
                             <button
@@ -324,16 +320,13 @@
                     </div>
                 </div>
             </div>
-
-            <div class="tab-pane container fade" id="settings">
-            </div>
         </div>
     </div>
     <div th:replace="~{fragments/footer :: footer}"></div>
 
     <script th:inline="javascript">
         const hash = window.location.hash || "#servers"; // Default to "#servers" if hash is empty
-        const tabLinks = ["servers", "groups", "settings"];
+        const tabLinks = ["servers", "groups"];
 
         tabLinks.forEach(link => {
             const isActive = hash === `#${link}`;

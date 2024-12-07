@@ -19,7 +19,7 @@
     <nav th:fragment="header" class="navbar navbar-bottom sticky-top navbar-expand-lg navbar-light bg-light">
         <div class="container">
             <a class="navbar-brand me-2" th:href="@{/}" href="/">
-                <b>Penguin</b>
+                <b style="color: #198754">🐧 Penguin</b>
             </a>
 
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -33,7 +33,7 @@
                     </li>
 
                     <li class="nav-item" sec:authorize="hasAuthority('ADMIN')">
-                        <a class="nav-link btn-link px-3 btn" th:href="@{/}" href="#">Admin Panel</a>
+                        <a class="nav-link btn-link px-3 btn" th:href="@{/admin}" href="/admin">Admin Panel</a>
                     </li>
 
                     <li class="nav-item" sec:authorize="!isAuthenticated()">
@@ -50,8 +50,8 @@
                         <a class="nav-link d-sm-flex align-items-sm-center" th:href="@{/auth/user}">
                             <span><i class="fa fa-user"></i></span>
                             <strong sec:authentication="name" class="d-none d-sm-block ms-1"></strong>
-                            <strong style="color: #b90202;" sec:authorize="hasAuthority('ADMIN')">&nbsp;[A]</strong>
-                            <strong style="color: #4900d7;" sec:authorize="hasAuthority('TEST')">&nbsp;[T]</strong>
+                            <strong style="color: #0288b9;" sec:authorize="hasAuthority('ADMIN')">&nbsp;[A]</strong>
+                            <strong style="color: #ffbc3c;" sec:authorize="hasAuthority('TEST')">&nbsp;[T]</strong>
                         </a>
                     </li>
 

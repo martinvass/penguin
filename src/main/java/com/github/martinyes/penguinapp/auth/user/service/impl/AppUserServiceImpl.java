@@ -6,12 +6,15 @@ import com.github.martinyes.penguinapp.auth.user.dto.EditUserDTO;
 import com.github.martinyes.penguinapp.auth.user.exception.UserAlreadyExistsException;
 import com.github.martinyes.penguinapp.auth.user.service.AppUserService;
 import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.session.SessionRegistry;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.argon2.Argon2PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -26,6 +29,8 @@ public class AppUserServiceImpl implements AppUserService, UserDetailsService {
 
     private final AppUserRepository appUserRepository;
     private final Argon2PasswordEncoder argon2PasswordEncoder;
+
+    private final SessionRegistry sessionRegistry;
 
     @Override
     public String registerUser(AppUser user) {
@@ -106,5 +111,20 @@ public class AppUserServiceImpl implements AppUserService, UserDetailsService {
                 .orElseThrow(() ->
                         new UsernameNotFoundException(
                                 String.format(USER_NOT_FOUND_MSG, username)));
+    }
+
+    @Override
+    public List<AppUser> findAll() {
+        return appUserRepository.findAll();
+    }
+
+    @Override
+    public int getActiveUserCount() {
+        return sessionRegistry.getAllPrincipals().size();
+    }
+
+    @Override
+    public long getRegisteredUserCount() {
+        return appUserRepository.count();
     }
 }

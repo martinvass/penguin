@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/header :: html_header}">
+    <style>
+        .stats-box {
+            background: #ffffff;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+        .stats-box h2 {
+            font-size: 2.5rem;
+            color: #343a40;
+            margin-bottom: 15px;
+        }
+        .stats-box p {
+            font-size: 1.1rem;
+            color: #6c757d;
+        }
+        .menu-card {
+            background: #ffffff;
+            border-radius: 20px;
+            padding: 20px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
+            transition: transform 0.2s, box-shadow 0.2s;
+            text-align: center;
+            border: 1px solid #81c566;
+        }
+        .menu-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+        }
+        .menu-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+            color: #495057;
+        }
+        .menu-card p {
+            color: #6c757d;
+            font-size: 1rem;
+            margin-bottom: 15px;
+        }
+    </style>
+</head>
+<body>
+<div th:replace="~{fragments/header :: header}"></div>
+
+<div class="container mt-5">
+    <div class="row justify-content-center mb-5">
+        <div class="col-md-8">
+            <div class="stats-box">
+                <h2>Admin Dashboard</h2>
+                <div class="row">
+                    <div class="col-md-4">
+                        <p><strong>Registered Users:</strong></p>
+                        <h3 th:text="${registeredUsersCount}">Unknown</h3>
+                    </div>
+                    <div class="col-md-4">
+                        <p><strong>Active Users:</strong></p>
+                        <h3 th:text="${activeUsersCount}">Unknown</h3>
+                    </div>
+                    <div class="col-md-4">
+                        <p><strong>Role:</strong></p>
+                        <h3 th:text="${role}">Unknown</h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row text-center">
+        <div class="col-md-4 mb-4">
+            <div class="menu-card">
+                <h3>User Management</h3>
+                <p>Manage users and their roles in the system.</p>
+                <a class="btn btn-success w-100" th:href="@{/admin/users}">Manage Users</a>
+            </div>
+        </div>
+        <div class="col-md-4 mb-4">
+            <div class="menu-card">
+                <h3>Monitoring Statistics</h3>
+                <p>Analyze performance data and stats about the system.</p>
+                <a class="btn btn-success w-100" th:href="@{/admin/statistics}">View Statistics</a>
+            </div>
+        </div>
+        <div class="col-md-4 mb-4">
+            <div class="menu-card">
+                <h3>System Logs</h3>
+                <p>Review system logs for troubleshooting.</p>
+                <a class="btn btn-success w-100" th:href="@{/admin/logs}">View Logs</a>
+            </div>
+        </div>
+        <div class="col-md-4 mb-4">
+            <div class="menu-card">
+                <h3>Configuration</h3>
+                <p>Edit system settings and configurations.</p>
+                <a class="btn btn-success w-100" th:href="@{/admin/configuration}">Edit Configuration</a>
+            </div>
+        </div>
+        <div class="col-md-4 mb-4">
+            <div class="menu-card">
+                <h3>Role Management</h3>
+                <p>Create, edit, or delete roles.</p>
+                <a class="btn btn-success w-100" th:href="@{/admin/roles}">Manage Roles</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div th:replace="~{fragments/footer :: footer}"></div>
+</body>
+</html>

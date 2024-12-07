@@ -4,6 +4,7 @@ import com.github.martinyes.penguinapp.auth.user.AppUser;
 import com.github.martinyes.penguinapp.auth.user.dto.EditUserDTO;
 import org.springframework.security.core.userdetails.UserDetailsService;
 
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -31,4 +32,9 @@ public interface AppUserService extends UserDetailsService {
      * @return An Optional containing the found AppUser, or an empty Optional if not found.
      */
     Optional<AppUser> findByEmail(String email);
+
+    List<AppUser> findAll();
+
+    int getActiveUserCount();
+    long getRegisteredUserCount();
 }
