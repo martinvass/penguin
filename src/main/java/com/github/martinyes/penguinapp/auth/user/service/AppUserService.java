@@ -33,8 +33,20 @@ public interface AppUserService extends UserDetailsService {
      */
     Optional<AppUser> findByEmail(String email);
 
+    /**
+     * Finds an application user by their ID.
+     *
+     * @param id The ID of the user to find.
+     * @return An Optional containing the found AppUser, or an empty Optional if not found.
+     */
+    Optional<AppUser> findById(long id);
+
     List<AppUser> findAll();
 
     int getActiveUserCount();
     long getRegisteredUserCount();
+
+    void logoutUser(AppUser user);
+
+    boolean toggleUserLockedStatus(AppUser user);
 }

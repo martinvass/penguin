@@ -142,6 +142,7 @@ public class AuthController {
 
         // Passwords match, proceed with account deactivation
         if (argon2PasswordEncoder.matches(password, user.get().getPassword())) {
+
             userService.deleteUser(user.get(), false);
 
             // Invalidate the user's session to log them out

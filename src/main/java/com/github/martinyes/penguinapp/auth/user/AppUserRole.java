@@ -11,6 +11,11 @@ public enum AppUserRole {
     USER,
 
     /**
+     * VIP user role accessing more features.
+     */
+    VIP,
+
+    /**
      * Test user role.
      */
     TEST,

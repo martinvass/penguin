@@ -91,6 +91,7 @@
 </head>
 <body>
 <div th:replace="~{fragments/header :: header}"></div>
+<div th:replace="~{alerts/adminAlerts :: adminAlerts}"></div>
 
 <div class="container mt-5">
     <div class="text-center">
@@ -110,7 +111,8 @@
                 <th>Username</th>
                 <th>Email</th>
                 <th>Role</th>
-                <th>Status</th>
+                <th>Account Type</th>
+                <th>Account Status</th>
                 <th>Creation Date</th>
                 <th>Actions</th>
             </tr>
@@ -122,13 +124,31 @@
                 <td th:text="${user.email}"></td>
                 <td th:text="${user.role}"></td>
                 <td>
-                    <span th:text="${user.enabled ? 'Active' : 'Inactive'}"></span>
+                    <span th:text="${user.enabled ? 'Verified' : 'Unverified'}"></span>
+                </td>
+                <td>
+                    <span th:text="${user.locked ? 'Blocked' : 'Operational'}"></span>
                 </td>
                 <td th:text="${#dates.format(user.creationDate, 'yyyy-MM-dd')}"></td>
                 <td>
-                    <a title="Edit account"><i class="fas fa-edit edit-icon"></i></a>
-                    <a title="Toggle status"><i class="fas fa-ban deactivate-icon"></i></a>
-                    <a title="Delete account"><i class="fas fa-trash trash-icon"></i></a>
+                    <form th:action="@{/admin/users/delete}" method="post" style="display: inline;">
+                        <input type="hidden" id="userId" name="userId" th:value="${user.id}" />
+                        <button type="submit" class="btn btn-danger btn-sm">
+                            <a title="Delete account"><i class="fas fa-trash trash-icon"></i></a>
+                        </button>
+                    </form>
+                    <form method="post" style="display: inline;">
+                        <input type="hidden" id="userIdEdit" name="userIdEdit" th:value="${user.id}" />
+                        <button type="submit" class="btn btn-success btn-sm">
+                            <a title="Edit account"><i class="fa fa-pencil edit-icon"></i></a>
+                        </button>
+                    </form>
+                    <form th:action="@{/admin/users/toggleStatus}" method="post" style="display: inline;">
+                        <input type="hidden" id="userIdStatus" name="userIdStatus" th:value="${user.id}" />
+                        <button type="submit" class="btn btn-success btn-sm">
+                            <a title="Toggle status"><i class="fas fa-ban deactivate-icon"></i></a>
+                        </button>
+                    </form>
                 </td>
             </tr>
             </tbody>
@@ -160,6 +180,14 @@
             }
         }
     }
+
+    document.querySelectorAll('.trash-icon').forEach(icon => {
+        icon.addEventListener('click', function (event) {
+            if (!confirm("Are you sure you want to delete this user?")) {
+                event.preventDefault();
+            }
+        });
+    });
 </script>
 
 </body>

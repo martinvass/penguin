@@ -80,4 +80,16 @@ public class HomeController {
         model.addAttribute("title", "Penguin - Features");
         return "features";
     }
+
+    /**
+     * Handler method for the access denied page.
+     *
+     * @param model The model to add attributes for rendering the view.
+     * @return The name of the view template for the access denied page.
+     */
+    @GetMapping("/access-denied")
+    private String accessDenied(Model model) {
+        model.addAttribute("title", "Penguin - Access Denied");
+        return "access-denied";
+    }
 }
