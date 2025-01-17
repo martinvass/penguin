@@ -258,7 +258,7 @@
         <div class="tab-content">
             <div class="tab-pane container active" id="servers">
                 <div class="dashboard-container">
-                    <div th:each="server: ${servers}" class="server-card">
+                    <div class="server-card" th:each="server: ${servers.getServers()}">
                         <div class="server-info">
                             <div class="server-icon"><i class="fas fa-server"></i></div>
                             <div>
@@ -270,6 +270,15 @@
                                      th:class="${server.serverStatus.name() == 'UP' ? 'server-status-online' :
                 (server.serverStatus.name() == 'DOWN' ? 'server-status-offline' : 'server-status-unknown')}">
                                     Server Down
+                                </div>
+<!--                                <div>-->
+<!--                                    <span th:if="${servers.getServerResponseTime(server) == -1}"-->
+<!--                                          th:text="'Ping: Timed Out'">Timed Out</span>-->
+<!--                                    <span th:if="${servers.getServerResponseTime(server) != -1}"-->
+<!--                                          th:text="'Ping: ' + ${servers.getServerResponseTime(server)} + ' ms'">0 ms</span>-->
+<!--                                </div>-->
+                                <div id="server-ping" th:data-server-ping-id="${server.id}" th:text="${servers.getServerResponseTime(server) == -1 ? 'Ping: Timed Out' : 'Ping: ' + servers.getServerResponseTime(server) + ' ms'}">
+                                    Ping: 0 ms
                                 </div>
                             </div>
                         </div>
@@ -339,7 +348,7 @@
         });
     </script>
 
-    <script th:src="@{/js/serverStatus.js}"></script>
-    <script th:src="@{/js/dashboard.js}"></script>
+    <script th:src="@{/js/dashboardUpdater.js}"></script>
+    <script th:src="@{/js/dashboardActions.js}"></script>
 </body>
 </html>

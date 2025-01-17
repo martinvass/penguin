@@ -1,14 +1,13 @@
 package com.github.martinyes.penguinapp.auth.user.service.impl;
 
-import com.github.martinyes.penguinapp.auth.user.AppUser;
 import com.github.martinyes.penguinapp.auth.repository.AppUserRepository;
+import com.github.martinyes.penguinapp.auth.user.AppUser;
 import com.github.martinyes.penguinapp.auth.user.dto.EditUserDTO;
 import com.github.martinyes.penguinapp.auth.user.exception.UserAlreadyExistsException;
 import com.github.martinyes.penguinapp.auth.user.service.AppUserService;
 import com.github.martinyes.penguinapp.server.service.ServerGroupService;
 import com.github.martinyes.penguinapp.server.service.ServerService;
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.session.SessionInformation;
 import org.springframework.security.core.session.SessionRegistry;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -188,7 +187,8 @@ public class AppUserServiceImpl implements AppUserService, UserDetailsService {
         String username = user.getUsername();
 
         for (Object principal : allPrincipals) {
-            if (principal instanceof UserDetails userDetails) {
+            if (principal instanceof UserDetails) {
+                UserDetails userDetails = (UserDetails) principal;
                 if (userDetails.getUsername().equals(username)) {
                     List<SessionInformation> sessions = sessionRegistry.getAllSessions(userDetails, false);
                     for (SessionInformation session : sessions)

@@ -1,6 +1,7 @@
 package com.github.martinyes.penguinapp.server.service.impl;
 
 import com.github.martinyes.penguinapp.auth.user.AppUser;
+import com.github.martinyes.penguinapp.server.Server;
 import com.github.martinyes.penguinapp.server.ServerGroup;
 import com.github.martinyes.penguinapp.server.dto.create.CreateServerDTO;
 import com.github.martinyes.penguinapp.server.dto.edit.EditServerDTO;
@@ -8,31 +9,39 @@ import com.github.martinyes.penguinapp.server.exception.ServerGroupNotFoundExcep
 import com.github.martinyes.penguinapp.server.exception.ServerNotFoundException;
 import com.github.martinyes.penguinapp.server.repository.ServerGroupRepository;
 import com.github.martinyes.penguinapp.server.repository.ServerRepository;
-import com.github.martinyes.penguinapp.server.Server;
 import com.github.martinyes.penguinapp.server.service.ServerService;
 import com.github.martinyes.penguinapp.util.AppUtils;
-import lombok.AllArgsConstructor;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
-import java.util.concurrent.TimeUnit;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.stream.Collectors;
 
 /**
  * Implementation of the {@link ServerService} interface.
  * Provides methods for managing servers.
  */
-@AllArgsConstructor
 @Service
 public class ServerServiceImpl implements ServerService {
 
     private final ServerGroupRepository serverGroupRepository;
     private final ServerRepository serverRepository;
+    private final Map<Long, Server> serverCache = new ConcurrentHashMap<>();
+
+    public ServerServiceImpl(ServerGroupRepository serverGroupRepository, ServerRepository serverRepository) {
+        this.serverGroupRepository = serverGroupRepository;
+        this.serverRepository = serverRepository;
+
+        serverRepository.findAll().forEach(server -> {
+            serverCache.put(server.getId(), server);
+            ping(server.getId());
+        });
+    }
 
     /**
      * Finds servers associated with the given user.
@@ -42,7 +51,15 @@ public class ServerServiceImpl implements ServerService {
      */
     @Override
     public List<Server> findByUser(AppUser user) {
-        return serverRepository.findByUser(user);
+        return serverRepository.findByUser(user).stream()
+                .peek(server -> {
+                    if (serverCache.containsKey(server.getId())) {
+                        Server cachedServer = serverCache.get(server.getId());
+                        server.setResponseTime(cachedServer.getResponseTime());
+                    }
+                })
+                .collect(Collectors.toList());
+        //return serverRepository.findByUser(user);
     }
 
     /**
@@ -53,7 +70,15 @@ public class ServerServiceImpl implements ServerService {
      */
     @Override
     public Optional<Server> findById(Long id) {
-        return serverRepository.findById(id);
+        return serverRepository.findById(id).stream()
+                .peek(server -> {
+                    if (serverCache.containsKey(server.getId())) {
+                        Server cachedServer = serverCache.get(server.getId());
+                        server.setResponseTime(cachedServer.getResponseTime());
+                    }
+                })
+                .findFirst();
+        //return serverRepository.findById(id);
     }
 
     /**
@@ -141,31 +166,28 @@ public class ServerServiceImpl implements ServerService {
      */
     @Override
     public boolean ping(Long serverId) {
-        Server server = get(serverId);
+        Server server = serverCache.get(serverId);
 
-        if (!AppUtils.isIPv4Address(server.getAddress())) {
-            try {
-                URL url = new URL(server.getAddress());
-                HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-                connection.setRequestMethod("HEAD");
-                int responseCode = connection.getResponseCode();
-
-                return responseCode == HttpURLConnection.HTTP_OK;
-            } catch (IOException e) {
-                return false;
-            }
+        if (server == null) {
+            throw new IllegalArgumentException("Server not found");
         }
 
+        boolean result = false;
         try {
-            boolean isWindows = System.getProperty("os.name").toLowerCase().contains("win");
+            if (!AppUtils.isIPv4Address(server.getAddress())) result = AppUtils.performHttpPing(server);
+            else result = AppUtils.performSystemPing(server);
 
-            ProcessBuilder processBuilder = new ProcessBuilder("ping",
-                    isWindows? "-n" : "-c", "1", server.getAddress());
-            Process proc = processBuilder.start();
-            return proc.waitFor(200, TimeUnit.MILLISECONDS);
-        } catch (Exception e) {
-            return false;
+            if (result)
+                server.setServerStatus(Server.ServerStatus.UP);
+            else
+                server.setServerStatus(Server.ServerStatus.DOWN);
+        } catch (IOException | InterruptedException e) {
+            server.setResponseTime(-1L);
+            server.setServerStatus(Server.ServerStatus.DOWN);
         }
+
+        serverCache.put(serverId, server);
+        return result;
     }
 
     /**
@@ -185,7 +207,7 @@ public class ServerServiceImpl implements ServerService {
         return server.get();
     }
 
-    @Scheduled(fixedRate = 10000)
+    /*@Scheduled(fixedRate = 10000)
     public void updateServerStatus() {
         List<Server> servers = serverRepository.findAll();
         for (Server server : servers) {
@@ -194,5 +216,5 @@ public class ServerServiceImpl implements ServerService {
             server.setServerStatus(res ? Server.ServerStatus.UP : Server.ServerStatus.DOWN);
             serverRepository.save(server);
         }
-    }
+    }*/
 }

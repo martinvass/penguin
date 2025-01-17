@@ -1,14 +1,12 @@
 package com.github.martinyes.penguinapp.server;
 
 import com.github.martinyes.penguinapp.auth.user.AppUser;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-
-import jakarta.persistence.*;
 
 import java.sql.Date;
 
@@ -55,6 +53,9 @@ public class Server {
     @ManyToOne
     @JoinColumn(name = "user_id")
     private AppUser user;
+
+    @Transient
+    private long responseTime;
 
     /**
      * Enum representing the status of a server.

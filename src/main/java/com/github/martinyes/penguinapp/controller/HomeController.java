@@ -2,20 +2,19 @@ package com.github.martinyes.penguinapp.controller;
 
 import com.github.martinyes.penguinapp.auth.user.AppUser;
 import com.github.martinyes.penguinapp.auth.user.service.AppUserService;
+import com.github.martinyes.penguinapp.controller.data.ServerDashboardData;
 import com.github.martinyes.penguinapp.server.dto.create.CreateGroupDTO;
 import com.github.martinyes.penguinapp.server.dto.create.CreateServerDTO;
 import com.github.martinyes.penguinapp.server.dto.edit.EditGroupDTO;
 import com.github.martinyes.penguinapp.server.dto.edit.EditServerDTO;
-import com.github.martinyes.penguinapp.util.RadioFormDeleteOption;
 import com.github.martinyes.penguinapp.server.service.ServerGroupService;
 import com.github.martinyes.penguinapp.server.service.ServerService;
+import com.github.martinyes.penguinapp.util.RadioFormDeleteOption;
 import lombok.AllArgsConstructor;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
 
 import java.security.Principal;
 import java.util.Optional;
@@ -59,7 +58,7 @@ public class HomeController {
             throw new UsernameNotFoundException(principal.getName());
 
         model.addAttribute("title", "Penguin - Dashboard");
-        model.addAttribute("servers", serverService.findByUser(user.get()));
+        model.addAttribute("servers", new ServerDashboardData(serverService.findByUser(user.get())));
         model.addAttribute("groups", serverGroupService.findByUser(user.get()));
         model.addAttribute("radioForm", new RadioFormDeleteOption());
         model.addAttribute("createServerDTO", new CreateServerDTO());

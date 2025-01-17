@@ -34,7 +34,8 @@ public class WebSecurityConfig {
             "/js/**",
             "/auth/login",
             "/auth/registration",
-            "/features"
+            "/features",
+            "/admin/testdata/generate"
     };
 
     private final String LOGIN_URL = "/auth/login";
