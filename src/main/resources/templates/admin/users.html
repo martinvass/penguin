@@ -87,6 +87,7 @@
             cursor: pointer;
             color: orange;
         }
+
     </style>
 </head>
 <body>
@@ -134,26 +135,58 @@
                     <form th:action="@{/admin/users/delete}" method="post" style="display: inline;">
                         <input type="hidden" id="userId" name="userId" th:value="${user.id}" />
                         <button type="submit" class="btn btn-danger btn-sm">
-                            <a title="Delete account"><i class="fas fa-trash trash-icon"></i></a>
+                            <i class="fas fa-trash trash-icon"></i>
                         </button>
                     </form>
                     <form method="post" style="display: inline;">
                         <input type="hidden" id="userIdEdit" name="userIdEdit" th:value="${user.id}" />
                         <button type="submit" class="btn btn-success btn-sm">
-                            <a title="Edit account"><i class="fa fa-pencil edit-icon"></i></a>
+                            <i class="fa fa-pencil edit-icon"></i>
                         </button>
                     </form>
                     <form th:action="@{/admin/users/toggleStatus}" method="post" style="display: inline;">
                         <input type="hidden" id="userIdStatus" name="userIdStatus" th:value="${user.id}" />
-                        <button type="submit" class="btn btn-success btn-sm">
-                            <a title="Toggle status"><i class="fas fa-ban deactivate-icon"></i></a>
+                        <button class="btn btn-warning btn-sm" type="submit">
+                            <i class="fas fa-ban deactivate-icon"></i>
                         </button>
                     </form>
                 </td>
             </tr>
             </tbody>
         </table>
+
+        <div style="text-align: center">
+            <div>
+                <form method="get" style="display: inline;" th:action="@{/admin/users}">
+                    <input name="page" th:value="${pageNumber - 1}" type="hidden"/>
+                    <button class="btn btn-secondary btn-sm" th:disabled="${pageNumber == 1}" type="submit">Previous
+                    </button>
+                </form>
+
+                <span>Page <span th:text="${pageNumber}"></span> of <span th:text="${totalPages}"></span></span>
+
+                <form method="get" style="display: inline;" th:action="@{/admin/users}">
+                    <input name="page" th:value="${pageNumber + 1}" type="hidden"/>
+                    <button class="btn btn-secondary btn-sm" th:disabled="${pageNumber == totalPages}" type="submit">
+                        Next
+                    </button>
+                </form>
+
+            </div>
+            <br>
+            <div>
+                <form method="get" style="display: inline;" th:action="@{/admin/users}">
+                    <label for="gotoPage">Go to page:</label>
+                    <input class="form-control form-control-sm" id="gotoPage" max="${totalPages}" min="1" name="page" style="width: 60px; display: inline;"
+                           th:value="${pageNumber}" type="number">
+                    <br>
+                    <button class="btn btn-primary btn-sm" type="submit">Go</button>
+                </form>
+            </div>
+            <br>
+        </div>
     </div>
+
 </div>
 
 <div th:replace="~{fragments/footer :: footer}"></div>

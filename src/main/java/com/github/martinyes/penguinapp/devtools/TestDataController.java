@@ -1,33 +1,37 @@
 package com.github.martinyes.penguinapp.devtools;
 
 import lombok.AllArgsConstructor;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.Authentication;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
 
-@RestController
+@Controller
 @AllArgsConstructor
 public class TestDataController {
 
     private final TestDataService testDataService;
 
     @PostMapping("/admin/testdata/generate")
-    @ResponseBody
-    private ResponseEntity<String> generateTestData(
+    private String generateTestData(
             @RequestParam int userCount,
-            @RequestParam int serverPerUser,
-            Authentication authentication) {
+            @RequestParam int serverPerUser) {
         try {
             testDataService.generateTestData(userCount, serverPerUser);
-            return ResponseEntity.ok("Test data generated successfully.");
+            return "redirect:/admin/configuration?created=true";
         } catch (Exception e) {
             e.printStackTrace();
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error generating test data");
+            return "redirect:/admin/configuration?created=false";
         }
     }
 
+    @PostMapping("/admin/testdata/delete")
+    private String deleteTestData() {
+        try {
+            testDataService.deleteTestData();
+            return "redirect:/admin/configuration?deleted=true";
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "redirect:/admin/configuration?deleted=false";
+        }
+    }
 }

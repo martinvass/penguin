@@ -11,7 +11,6 @@ import com.github.martinyes.penguinapp.server.repository.ServerGroupRepository;
 import com.github.martinyes.penguinapp.server.repository.ServerRepository;
 import com.github.martinyes.penguinapp.server.service.ServerService;
 import com.github.martinyes.penguinapp.util.AppUtils;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
@@ -59,7 +58,6 @@ public class ServerServiceImpl implements ServerService {
                     }
                 })
                 .collect(Collectors.toList());
-        //return serverRepository.findByUser(user);
     }
 
     /**
@@ -78,7 +76,6 @@ public class ServerServiceImpl implements ServerService {
                     }
                 })
                 .findFirst();
-        //return serverRepository.findById(id);
     }
 
     /**
@@ -107,6 +104,7 @@ public class ServerServiceImpl implements ServerService {
         server.setDescription(createServerDTO.getDescription().isEmpty() ? "" : createServerDTO.getDescription());
 
         serverRepository.save(server);
+        serverCache.put(server.getId(), server);
     }
 
     /**
@@ -117,6 +115,7 @@ public class ServerServiceImpl implements ServerService {
     @Override
     public void delete(Long id) {
         serverRepository.delete(get(id));
+        serverCache.remove(id);
     }
 
     /**
@@ -145,7 +144,9 @@ public class ServerServiceImpl implements ServerService {
         if (group != null)
             server.setServerGroup(group);
 
+        serverCache.remove(id);
         serverRepository.save(server);
+        serverCache.put(id, server);
     }
 
     /**
@@ -186,6 +187,7 @@ public class ServerServiceImpl implements ServerService {
             server.setServerStatus(Server.ServerStatus.DOWN);
         }
 
+        serverRepository.save(server);
         serverCache.put(serverId, server);
         return result;
     }
@@ -206,15 +208,4 @@ public class ServerServiceImpl implements ServerService {
 
         return server.get();
     }
-
-    /*@Scheduled(fixedRate = 10000)
-    public void updateServerStatus() {
-        List<Server> servers = serverRepository.findAll();
-        for (Server server : servers) {
-            boolean res = ping(server.getId());
-
-            server.setServerStatus(res ? Server.ServerStatus.UP : Server.ServerStatus.DOWN);
-            serverRepository.save(server);
-        }
-    }*/
 }

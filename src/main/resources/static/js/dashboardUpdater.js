@@ -1,11 +1,16 @@
+// Közös AJAX függvény
 async function fetchServerData(url, element, dataMapper, classMapper) {
     try {
         const response = await fetch(url);
         if (!response.ok) throw new Error("Network response was not ok.");
         const data = await response.json();
 
+        // Alapértelmezett adat feldolgozása
         element.innerHTML = dataMapper(data);
+        console.log(dataMapper(data));
+        console.log(classMapper(data));
 
+        // Alapértelmezett CSS osztály hozzáadása
         element.classList = [];
         element.classList.add(classMapper(data));
     } catch (error) {
@@ -13,6 +18,7 @@ async function fetchServerData(url, element, dataMapper, classMapper) {
     }
 }
 
+// Server status update függvény
 function updateServerStatus(serverId, element) {
     const statusMap = {
         "UP": "Server Up",
@@ -32,13 +38,15 @@ function updateServerStatus(serverId, element) {
     );
 }
 
+// Server ping update függvény
 function updateServerPing(serverId, element) {
     fetchServerData(`/api/internal/servers/ping/${serverId}`, element,
         (ping) => ping === -1 ? "Ping: Timed Out" : `Ping: ${ping} ms`,
-        ""
+        (ping) => ping === -1 ? "server-ping-timeout" : "server-ping"
     );
 }
 
+// Az elemek frissítése 10 másodpercenként
 document.querySelectorAll("div#server-status").forEach(element => {
     const serverId = element.getAttribute("data-server-update-id");
     setInterval(() => updateServerStatus(serverId, element), 10000);

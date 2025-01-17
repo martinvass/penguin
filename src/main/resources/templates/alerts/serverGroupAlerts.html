@@ -3,7 +3,6 @@
 <head th:replace="~{fragments/header :: html_header}"></head>
 <body>
     <div th:fragment="serverGroupAlerts" class="container mt-3">
-        <!-- Success Message Toast for server group creation -->
         <div th:if="${(param.createGroup != null) and (param.createGroup[0] == 'success')}"
              class="toast align-items-center text-white bg-success border-0 position-fixed top-0 end-0"
              role="alert" aria-live="assertive" aria-atomic="true" style="margin-top: 75px; margin-right: 10px">
@@ -15,7 +14,6 @@
             </div>
         </div>
 
-        <!-- Success Message Toast for server group deletion -->
         <div th:if="${(param.delGroup != null) and (param.delGroup[0] == 'success')}"
              class="toast align-items-center text-white bg-success border-0 position-fixed top-0 end-0"
              role="alert" aria-live="assertive" aria-atomic="true" style="margin-top: 75px; margin-right: 10px">
@@ -27,7 +25,6 @@
             </div>
         </div>
 
-        <!-- Error Message Toast for server group deletion -->
         <div th:if="${(param.delGroup != null) and (param.delGroup[0] == 'failure')}"
              class="toast align-items-center text-white bg-danger border-0 position-fixed top-0 end-0"
              role="alert" aria-live="assertive" aria-atomic="true" style="margin-top: 75px; margin-right: 10px">
@@ -39,7 +36,6 @@
             </div>
         </div>
 
-        <!-- Success Message Toast for server group edit -->
         <div th:if="${(param.editGroup != null) and (param.editGroup[0] == 'success')}"
              class="toast align-items-center text-white bg-success border-0 position-fixed top-0 end-0"
              role="alert" aria-live="assertive" aria-atomic="true" style="margin-top: 75px; margin-right: 10px">
@@ -51,7 +47,6 @@
             </div>
         </div>
 
-        <!-- Error Message Toast for server group edit -->
         <div th:if="${(param.editGroup != null) and (param.editGroup[0] == 'failure')}"
              class="toast align-items-center text-white bg-danger border-0 position-fixed top-0 end-0"
              role="alert" aria-live="assertive" aria-atomic="true" style="margin-top: 75px; margin-right: 10px">
@@ -63,7 +58,6 @@
             </div>
         </div>
 
-        <!-- Success Message Toast for adding servers into a group -->
         <div th:if="${(param.add != null) and (param.add[0] == 'success')}"
              class="toast align-items-center text-white bg-success border-0 position-fixed top-0 end-0"
              role="alert" aria-live="assertive" aria-atomic="true" style="margin-top: 75px; margin-right: 10px">
@@ -75,7 +69,17 @@
             </div>
         </div>
 
-        <!-- Success Message Toast for removing servers from a group -->
+        <div th:if="${(param.add != null) and (param.add[0] == 'error')}"
+             class="toast align-items-center text-white bg-danger border-0 position-fixed top-0 end-0"
+             role="alert" aria-live="assertive" aria-atomic="true" style="margin-top: 75px; margin-right: 10px">
+            <div class="d-flex">
+                <div class="toast-body">
+                    An error has occurred while adding a server to the group.
+                </div>
+                <button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+        </div>
+
         <div th:if="${(param.remove != null) and (param.remove[0] == 'success')}"
              class="toast align-items-center text-white bg-success border-0 position-fixed top-0 end-0"
              role="alert" aria-live="assertive" aria-atomic="true" style="margin-top: 75px; margin-right: 10px">

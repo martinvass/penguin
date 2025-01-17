@@ -46,18 +46,6 @@
         button:hover {
             background-color: #0056b3;
         }
-
-        .alert {
-            margin-top: 20px;
-            padding: 10px;
-            color: white;
-            background-color: green;
-            border-radius: 5px;
-        }
-
-        .error {
-            background-color: red;
-        }
     </style>
 </head>
 <body>
@@ -65,7 +53,9 @@
 
 <div class="container">
     <h2 class="text-center">Test Data Generator</h2>
-    <p class="text-center">Use this tool to generate test data for users and their servers.</p>
+    <p class="text-center">Use this tool to manage test data for the application.</p>
+
+    <h6>Create test data</h6>
     <form method="post" th:action="@{/admin/testdata/generate}">
         <label for="userCount">User Count:</label>
         <input id="userCount" min="1" name="userCount" required type="number">
@@ -73,33 +63,19 @@
         <label for="serverPerUser">Servers Per User:</label>
         <input id="serverPerUser" min="1" name="serverPerUser" required type="number">
 
+        <br>
+        <br>
         <button type="submit">Generate Test Data</button>
     </form>
+    <br>
+
+    <h6>Remove test data</h6>
+    <form method="post" th:action="@{/admin/testdata/delete}">
+        <button type="submit">Remove Test Data</button>
+    </form>
+    <br>
 </div>
 
 <div th:replace="~{fragments/footer :: footer}"></div>
-
-<script>
-    function submitTestDataForm() {
-        const userCount = document.getElementById('userCount').value;
-        const serverPerUser = document.getElementById('serverPerUser').value;
-
-        fetch('/admin/testdata/generate', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({userCount, serverPerUser})
-        })
-            .then(response => {
-                if (response.ok) {
-                    alert("Test data generated successfully.");
-                } else {
-                    alert("Failed to generate test data.");
-                }
-            })
-            .catch(error => console.error('Error:', error));
-    }
-</script>
 </body>
 </html>

@@ -1,8 +1,12 @@
 package com.github.martinyes.penguinapp.controller;
 
+import com.github.martinyes.penguinapp.auth.repository.AppUserRepository;
 import com.github.martinyes.penguinapp.auth.user.AppUser;
 import com.github.martinyes.penguinapp.auth.user.service.AppUserService;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.stereotype.Controller;
@@ -11,7 +15,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import java.util.List;
 import java.util.Optional;
 
 /**
@@ -30,6 +33,7 @@ import java.util.Optional;
 public class AdminController {
 
     private final AppUserService userService;
+    private final AppUserRepository userRepository;
 
     /**
      * Handler method for the admin page.
@@ -60,11 +64,19 @@ public class AdminController {
      * @return The name of the view template for the user management page.
      */
     @GetMapping("/admin/users")
-    private String users(Model model) {
-        List<AppUser> users = userService.findAll();
-
+    private String users(@RequestParam(defaultValue = "0") int page, Model model) {
         model.addAttribute("title", "Penguin - Users");
-        model.addAttribute("users", users);
+
+        if (page < 1)
+            page = 1;
+
+        int pageSize = 15;
+        Pageable pageable = PageRequest.of(page - 1, pageSize);
+        Page<AppUser> userPage = userRepository.findAll(pageable);
+
+        model.addAttribute("users", userPage.getContent());
+        model.addAttribute("pageNumber", page);
+        model.addAttribute("totalPages", userPage.getTotalPages());
 
         return "admin/users";
     }

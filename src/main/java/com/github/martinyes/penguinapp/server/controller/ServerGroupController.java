@@ -101,7 +101,7 @@ public class ServerGroupController {
         Optional<Server> server = serverService.findByName(serverName);
 
         if (server.isEmpty())
-            throw new ServerNotFoundException(String.format("Server not found with name %s", serverName));
+            return String.format("redirect:/dashboard/groups/%s?add=error", group.getName());
 
         serverGroupService.addServerToGroup(group, server.get());
 
