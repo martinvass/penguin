@@ -1,8 +1,9 @@
-package com.github.martinyes.penguinapp.controller;
+package com.github.martinyes.penguinapp.dashboard.controller;
 
 import com.github.martinyes.penguinapp.auth.user.AppUser;
 import com.github.martinyes.penguinapp.auth.user.service.AppUserService;
-import com.github.martinyes.penguinapp.controller.data.ServerDashboardData;
+import com.github.martinyes.penguinapp.dashboard.controller.data.ServerDashboardData;
+import com.github.martinyes.penguinapp.server.Server;
 import com.github.martinyes.penguinapp.server.dto.create.CreateGroupDTO;
 import com.github.martinyes.penguinapp.server.dto.create.CreateServerDTO;
 import com.github.martinyes.penguinapp.server.dto.edit.EditGroupDTO;
@@ -15,6 +16,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import java.security.Principal;
 import java.util.Optional;

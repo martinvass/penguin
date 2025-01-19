@@ -11,6 +11,7 @@
             <h1 class="mb-3" th:text="${group.name}"><b>Group</b></h1>
 
             <button class="btn btn-primary" role="button"><a style="color: #fff" th:href="@{/dashboard#groups}">Go Back</a></button>
+            <button class="btn btn-primary">Settings</button>
             <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addServerModal">
                 Add Server
             </button>
@@ -68,7 +69,7 @@
                         </div>
                         <p style="color: #737373" th:text="${server.description} ?: ${server.description}">Description</p>
                         <div class="server-actions">
-                            <a href="#" class="btn btn-primary server-action-button">View Details</a>
+                            <a th:href="@{/dashboard/server/{id}(id=${server.id})}" class="btn btn-primary server-action-button">View</a>
                             <form method="post"
                                   role="form"
                                   th:action="@{/dashboard/group/remove}">

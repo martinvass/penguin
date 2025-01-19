@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/header :: html_header}"></head>
+<body>
+<style>
+    body {
+        background-color: #f8f9fa;
+    }
+    .stat-card {
+        background: #fff;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        padding: 20px;
+        text-align: center;
+    }
+    .chart-container {
+        position: relative;
+        height: 300px;
+    }
+    #map {
+        height: 300px;
+        width: 100%;
+        border-radius: 8px;
+    }
+</style>
+
+<div th:replace="~{fragments/header :: header}"></div>
+
+<div class="container py-5">
+    <h1 class="text-center mb-4" th:text="${server.name}">Server Dashboard</h1>
+    <p class="text-center" th:text="${server.address}">127.0.0.1</p>
+    <p class="text-center" style="color: #198754">200 OK</p>
+<!--    <p class="text-center" style="color: #bf0811">404 Not Found</p>-->
+
+    <!-- Action Buttons -->
+    <div class="d-flex justify-content-end mb-4">
+        <button class="btn btn-primary me-2">Settings</button>
+        <button class="btn btn-secondary me-2">Resources</button>
+        <button class="btn btn-success"><a style="color: #fff" th:href="@{/dashboard}">Go Back Home</a></button>
+    </div>
+
+    <!-- Statistic Overview -->
+    <div class="row mb-4">
+        <div class="col-md-3">
+            <div class="stat-card">
+                <h3 style="color: #198754">Online</h3>
+<!--                <h3 style="color: #bf0811">Offline</h3>-->
+<!--                <h3 style="color: #ffbc3c">Unknown</h3>-->
+                <p>Status</p>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="stat-card">
+                <h3>0 ms</h3>
+                <p>Last ping</p>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="stat-card">
+                <h3>Apache</h3>
+                <p>Apache/2.4.54</p>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="stat-card">
+                <h3>2 hours</h3>
+                <p>Uptime</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Server Security Map -->
+    <div class="row mb-4">
+        <div class="col-md-12">
+            <div class="stat-card">
+                <h5>Server Location</h5>
+                <p>ISP: Giganet Internet Szolgaltato Kft</p>
+                <div id="map"></div>
+                <script>
+                    document.addEventListener("DOMContentLoaded", function () {
+                        const map = L.map('map').setView([47.95315933227539, 21.726789474487305], 10);
+                        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                            attribution: '© OpenStreetMap contributors'
+                        }).addTo(map);
+
+                        L.marker([47.95315933227539, 21.726789474487305]).addTo(map)
+                            .bindPopup('Server Location')
+                            .openPopup();
+                    });
+                </script>
+            </div>
+        </div>
+    </div>
+
+    <h1 class="text-center mb-4">Network performance</h1>
+    <div class="row mb-4">
+        <div class="col-md-3">
+            <div class="stat-card">
+                <h3>0%</h3>
+                <p>Packet loss</p>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="stat-card">
+                <h3>0 ms</h3>
+                <p>DNS lookup</p>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="stat-card">
+                <h3>Let's Encrypt</h3>
+                <p>SSL certificate</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div th:replace="~{fragments/footer :: footer}"></div>
+</body>
+</html>

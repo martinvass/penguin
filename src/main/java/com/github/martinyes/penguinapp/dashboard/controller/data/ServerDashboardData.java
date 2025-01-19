@@ -1,4 +1,4 @@
-package com.github.martinyes.penguinapp.controller.data;
+package com.github.martinyes.penguinapp.dashboard.controller.data;
 
 import com.github.martinyes.penguinapp.server.Server;
 import lombok.AllArgsConstructor;

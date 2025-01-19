@@ -1,4 +1,4 @@
-package com.github.martinyes.penguinapp.controller;
+package com.github.martinyes.penguinapp.dashboard.controller;
 
 import com.github.martinyes.penguinapp.auth.repository.AppUserRepository;
 import com.github.martinyes.penguinapp.auth.user.AppUser;
@@ -30,7 +30,7 @@ import java.util.Optional;
  */
 @Controller
 @AllArgsConstructor
-public class AdminController {
+public class AdminDashboardController {
 
     private final AppUserService userService;
     private final AppUserRepository userRepository;
